@@ -21,18 +21,6 @@ Catalyst Controller.
 
 =cut
 
-#sub index :Path :Args(0) {
-   # my ( $self, $c ) = @_;
-	
-	#my $username = $c->request->params->{"username"};
-	#my $password = $c->request->params->{"password"};
-	#$c->stash(users=> [$c- use Catalyst qw/Upload::Image::Magick/;>model('DB::User')->all]);
-	#$c->stash(template => 'login.tt',username=>$username);
-
-
-    #$c->response->body('Matched Gallery::Controller::Login in Login.');
-#}
-
 sub index :Path :Args(0) {
         my ($self, $c) = @_;
 
@@ -45,11 +33,6 @@ sub index :Path :Args(0) {
             # Attempt to log the user in
             if ($c->authenticate({ username => $username,
                                    password => $password  } )) {
-                # If successful, then let them use the application
-                #$c->response->redirect($c->uri_for(
-                 #   $c->controller('Login')->action_for('index')));
-				
-#-------------------------------
 					$c->stash(template => 'login.tt',username=>$username);
                 return;
             } else {
