@@ -1,4 +1,4 @@
-package Gallery::Schema::Result::Album;
+package Gallery::Schema::Result::Picture;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
@@ -15,29 +15,28 @@ __PACKAGE__->load_components("InflateColumn::DateTime");
 
 =head1 NAME
 
-Gallery::Schema::Result::Album
+Gallery::Schema::Result::Picture
 
 =cut
 
-__PACKAGE__->table("albums");
+__PACKAGE__->table("pictures");
 
 =head1 ACCESSORS
+
+=head2 picture_id
+
+  data_type: 'integer'
+  is_nullable: 0
+
+=head2 description
+
+  data_type: 'varchar'
+  is_nullable: 1
 
 =head2 album_id
 
   data_type: 'integer'
   is_nullable: 0
-
-=head2 album_name
-
-  data_type: 'varchar'
-  is_nullable: 1
-
-=head2 created_date
-
-  data_type: 'datetime'
-  default_value: CURRENT_DATE
-  is_nullable: 1
 
 =head2 user_id
 
@@ -47,29 +46,24 @@ __PACKAGE__->table("albums");
 =cut
 
 __PACKAGE__->add_columns(
+  "picture_id",
+  { data_type => "integer", is_nullable => 0 },
+  "description",
+  { data_type => "varchar", is_nullable => 1 },
   "album_id",
   { data_type => "integer", is_nullable => 0 },
-  "album_name",
-  { data_type => "varchar", is_nullable => 1 },
-  "created_date",
-  {
-    data_type     => "datetime",
-    default_value => \"CURRENT_DATE",
-    is_nullable   => 1,
-  },
   "user_id",
   { data_type => "integer", is_nullable => 0 },
 );
-__PACKAGE__->set_primary_key("album_id", "user_id");
-#set relationshops
-__PACKAGE__-> belongs_to( "users","Gallery::Schema::Result::Users",
-	{ user_id => "users"},);
-__PACKAGE__-> has_many( "pictures" => 'Gallery::Schema::Result::Pictures',
-{"foreign.album_id"=>"self.album_id"},
+__PACKAGE__->set_primary_key("picture_id", "album_id", "user_id");
+#set relationship
+__PACKAGE__-> belongs_to( "albums","Gallery::Schema::Result::Albums",
+	{"foreign.picture_id"=>"self.picture_id"},
 );
 
+
 # Created by DBIx::Class::Schema::Loader v0.07010 @ 2011-04-12 11:28:29
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:tig8iEDyuQxTal6wYtbHPQ
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:SmeoRSydFtD+hymGxrIJPg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
