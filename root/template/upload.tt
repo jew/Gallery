@@ -1,24 +1,28 @@
-<font face="verdana,arial" size=-1>
-<center><table cellpadding=2 cellspacing=0 border=0>
-<tr><td bgcolor="blue">
-<table cellpadding=0 cellspacing=0 border=0 width=100%>
-<tr>
-<td bgcolor="blue" align=center style="padding:2;padding-bottom:4"><b>
-<font size=-1 color="white" face="verdana,arial">
-<b>Enter your login and password</b></font></th></tr>
-<tr><td bgcolor="white" style="padding:5"><br>
-
-<form action="" method="post" enctype="multipart/form-data"> 
-<center><table>
-
-<tr><td><font face="verdana,arial" size=-1>Upload Photo</td><td>
-</td></tr>
-
-<tr><td><font face="verdana,arial" size=-1>Photo to Upload:</td><td><input type="file" name="picture" /></td></tr>
-<tr><td><font face="verdana,arial" size=-1>Description</td><td><input type="" name="description"></td></tr>
-<tr><td><font face="verdana,arial" size=-1>&nbsp;</td><td><font face="verdana,arial" size=-1><input type="submit" value="Enter"></td></tr>
-<tr><td colspan=2><font face="verdana,arial" size=-1>&nbsp;</td></tr>
-
-</table></center>
+<form method="post" name='upload' action="upload" ENCTYPE="multipart/form-data" id="upload_image_form">
+		<div >
+			<label for="imagepath">File path :</label>
+			<div >
+				<input  type="file" name="imagepath" id="imagepath" size="37" />	
+			</div>
+		</div>
+		<div >
+			<label for="imagename">Image name:</label>
+			<div>
+				<input type="text" name="imagename" id="imagename" />	
+			</div>
+		</div>
+		<div for="description">
+			<label >Description:</label>  
+			<div >
+				<input class="form_input1" type="text" name="description"  id="description" size="40"/>
+				 <div class="validate_msg"></div>
+			</div>
+		</div>
+		<div class="form_row4 align_btn_R">
+			<input type="submit" name="submit" value="Add new image" />
+		</div>
 </form>
 
+
+
+   
