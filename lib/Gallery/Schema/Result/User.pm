@@ -71,16 +71,10 @@ __PACKAGE__->add_columns(
   { data_type => "varchar", is_nullable => 1 },
 );
 __PACKAGE__->set_primary_key("user_id");
-#set relationships
-__PACKAGE__->has_many("albums" => 'Gallery::Schema::Result::Albums',
-{"foreign.user_id"=>"self.user_id"},);
-__PACKAGE__->has_many("user_comments" => 'Gallery::Schema::Result::User_comments',
-{"foreign.user_id"=>"self.user_id"},);
-__PACKAGE__->many_to_many("comments" => 'user_comments','comment');
 
 
-# Created by DBIx::Class::Schema::Loader v0.07010 @ 2011-04-12 11:28:29
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:eadoOpj8V1lF2dfvudm9OA
+# Created by DBIx::Class::Schema::Loader v0.07010 @ 2011-04-10 15:31:00
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:J14v+mazSOJjRRdagWc6qQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

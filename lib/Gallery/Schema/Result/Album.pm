@@ -1,77 +1,18 @@
-package Gallery::Schema::Result::Album;
-
-# Created by DBIx::Class::Schema::Loader
-# DO NOT MODIFY THE FIRST PART OF THIS FILE
-
-use strict;
-use warnings;
-
-use Moose;
-use MooseX::NonMoose;
-use namespace::autoclean;
-extends 'DBIx::Class::Core';
-
-__PACKAGE__->load_components("InflateColumn::DateTime");
-
-=head1 NAME
-
-Gallery::Schema::Result::Album
-
-=cut
-
-__PACKAGE__->table("albums");
-
-=head1 ACCESSORS
-
-=head2 album_id
-
-  data_type: 'integer'
-  is_nullable: 0
-
-=head2 album_name
-
-  data_type: 'varchar'
-  is_nullable: 1
-
-=head2 created_date
-
-  data_type: 'datetime'
-  default_value: CURRENT_DATE
-  is_nullable: 1
-
-=head2 user_id
-
-  data_type: 'integer'
-  is_nullable: 0
-
-=cut
-
+package Gallery::Schema::Result::Albums;
+use base "DBIx::Class";
+__PACKAGE__->load_components(qw/TimeStamp Core/);
+__PACKAGE__->table("Albums");
 __PACKAGE__->add_columns(
-  "album_id",
-  { data_type => "integer", is_nullable => 0 },
-  "album_name",
-  { data_type => "varchar", is_nullable => 1 },
-  "created_date",
-  {
-    data_type     => "datetime",
-    default_value => \"CURRENT_DATE",
-    is_nullable   => 1,
-  },
-  "user_id",
-  { data_type => "integer", is_nullable => 0 },
+    "album_id"		=> { data_type => "INT", 		is_nullable => 0, },
+	"album_name" 	=> { data_type => "VARCHAR", 	is_nullable => 1,	 size => 255, },
+	"created_date" 	=> { data_type => 'datetime',	set_on_create => 1, set_on_update => 1 },
+		
 );
-__PACKAGE__->set_primary_key("album_id", "user_id");
-#set relationshops
+
+__PACKAGE__-> set_primary_key( "album_id ", "user_id" );
 __PACKAGE__-> belongs_to( "users","Gallery::Schema::Result::Users",
 	{ user_id => "users"},);
 __PACKAGE__-> has_many( "pictures" => 'Gallery::Schema::Result::Pictures',
 {"foreign.album_id"=>"self.album_id"},
 );
-
-# Created by DBIx::Class::Schema::Loader v0.07010 @ 2011-04-12 11:28:29
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:tig8iEDyuQxTal6wYtbHPQ
-
-
-# You can replace this text with custom code or comments, and it will be preserved on regeneration
-__PACKAGE__->meta->make_immutable;
 1;
