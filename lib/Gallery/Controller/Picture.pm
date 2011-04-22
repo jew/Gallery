@@ -1,4 +1,4 @@
-package Gallery::Controller::Upload;
+package Gallery::Controller::Picture;
 use Moose;
 use namespace::autoclean;
 use URI::Escape;
@@ -10,7 +10,7 @@ BEGIN {extends 'Catalyst::Controller'; }
 
 =head1 NAME
 
-Gallery::Controller::Upload - Catalyst Controller
+Gallery::Controller::Picture - Catalyst Controller
 
 =head1 DESCRIPTION
 
@@ -24,25 +24,46 @@ Catalyst Controller.
 =head2 index
 
 =cut
-#TODO:album_ID still dont have 
+
 sub index :Path :Args(0) {
-    my ($self, $c) = @_;
-    
-    # Retrieve the values from the form
+    my ( $self, $c ) = @_;
+
+    $c->response->body('Matched Gallery::Controller::Picture in Picture.');
+}
+
+
+=head3 index
+
+=cut
+
+sub base :Chained('/') :PathPart('picture') :CaptureArgs(1){
+    my ( $self, $c,$picture_id) = @_;
+    my $login_user= $c->user->user_id;
+    $c->stash(picture_id =>  $picture_id);
+    $c->stash(picture => $c->model('DB::Picture')->search({picture_id=>$picture_id}));
+    $c->stash(template => 'picture/show_pics.tt');
+}
+
+=head3 add picture to table Picture
+
+=cut
+sub add :Local :Args(0) {
+    my ( $self, $c ) = @_;   
+      # Retrieve the values from the form
 	my $imagepath   = $c->request->params->{imagepath}    || '';
 	my $imagename   = $c->request->params->{imagename}    || '';
 	my $description   = $c->request->params->{description}    || '';
     my $upload = $c->request->upload('imagepath');
     my $imagegallerypath = $c->config->{'imagefallerypath'};
     my $login_user= $c->user->user_id;
+    #search for albums 
+    $c->stash( albums =>[$c->model('DB::Album')->search({user_id=>$login_user})]);
     my $album_id   = $c->request->params->{album_id};
-    $c->log->debug("ALBUM ID----->". $album_id);
-    
-    
-#Upload
+    #$c->log->debug("ALBUM ID----->". $album_id);
+	#Upload
     if (!$upload) {
     	$c->log->debug('No upload');
-		$c->stash(template => 'upload.tt',result=>'No upload');
+		$c->stash(template => 'picture/upload.tt',result=>'No upload');
     	return 1;
     }
     #find max of picture_id 
@@ -79,7 +100,6 @@ sub index :Path :Args(0) {
 	$c->log->debug("-description-->".$description);
 	#If upload success ==> continue
    		if ($upload_result==1) {
-			#$c->stash(template => 'upload.tt',result=>"Yes U Can");
 			$c->stash(status_msg => "Upload complete!");
 			#Save image to table 'pictures'
 			my $picture= $c->model('DB::Picture')->update_or_create({
@@ -93,21 +113,49 @@ sub index :Path :Args(0) {
 			#if album's thumbnail = '' ==> insert current image to thumbnail
 				if ($picture->get_column('thumbnail') eq '') {
 				# chang name 19 April
-					$imagetmpname =~ s/\.[^.]*$//;;
-        			my $name=$1;
-					my $thumb_name = $name ."_low.png";
+					$imagetmpname =~ s/\.[^.]*$//;
+					$c->log->debug("imagetmpname------------------->".$imagetmpname);
+					$c->log->debug("$1------------------------------->" . $1);
+        			my $name= $imagetmpname ;
+        			$c->log->debug("NAME------------------------------->" . $name);
+					my $thumb_name = ($name ."_low.png");
+					$c->log->debug("thumb_name------------------------------->" . $thumb_name);
 					$picture->update( {
 					thumbnail => $thumb_name, 	
 					});
 				}
    		} else {
     		 $c->stash(error_msg => "Upload fail!");
-			#$c->stash(template => 'upload.tt',result=>"No U Cant");	
-    	}
-    
-	
-    $c->stash(template => 'upload.tt');  	
+    	}   
+    $c->stash(template => 'picture/upload.tt');  
 }
-__PACKAGE__->meta->make_immutable;
 
+=head2 delete
+
+=cut
+#--------------------------------------------------------------------------------ว๊ากกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกก
+sub delete :Chained('base') :PathPart('delete') :Args(0){ 
+    my ( $self, $c) = @_;
+     if($c->req->method eq 'POST') {
+        $c->stash->{picture}->delete;
+        $c->response->redirect($c->uri_for('/picture'));
+    }
+    else {
+        $c->stash(title    => 'Delete Picture');
+        $c->stash(template => 'picture/delete.tt');
+    }; 
+
+=head1 AUTHOR
+
+jew,,,,
+
+=head1 LICENSE
+
+This library is free software. You can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut
+
+__PACKAGE__->meta->make_immutable;
+}
 1;

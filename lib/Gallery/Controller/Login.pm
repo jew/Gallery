@@ -33,6 +33,11 @@ sub index :Path :Args(0) {
             # Attempt to log the user in
             if ($c->authenticate({ username => $username,
                                    password => $password  } )) {
+                                   	
+                                   	
+                                   	
+                                   	
+                                   	
 					$c->stash(template => 'login.tt',username=>$username);
                 return;
             } else {

@@ -24,14 +24,16 @@ Catalyst Controller.
 
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
-   	my $album_name = $c->request->params->{album_name};
-   	my $userid = $c->user->user_id;
-
+    my $submit = $c->request->params->{'submit'};	
   
+   	my $album_name = $c->request->param('album_name');
+   	my $userid = $c->user->user_id;
 	#my $links = $c->model('DB::Album')->search_rs( { user_id => 1 }, {order_by => 'album_id DESC'})->single();
 	#my $link = $links->album_id;
 	#$c->log->debug("max user id === $link");
 
+	# TODO: FIX this. This will only work for one user, since max should be unique for all users
+	# and now it is only finding the max id for this user.
 	my $links = $c->model('DB::Album')->search_rs( { user_id => $userid });
 	my $album_ids = $links->get_column('album_id');
 	my $maxalbum_id = $album_ids->max;
@@ -39,34 +41,29 @@ sub index :Path :Args(0) {
 	my $max;
 	if($maxalbum_id ==0){
 		$max = 1;
-		
 	}
 	else {
-		
 		$max = $maxalbum_id+1;
 	}
 	
-	
-    my $r = $links->update_or_create(
-    {
-       album_id =>$max,
-       user_id =>$userid,  
-       album_name =>  $album_name 
-          
-     });
-
-	#if($r->album_id) {
-	
-			#$c->(statusmsg=>"Successful");
-
-	
-	#}
-
-
-
-	 $c->log->debug("Debug link".$r->album_id);
-	 
-    $c->stash(template => 'add_album',albumname=>$album_name,maxalbum_id=>$max,userid=>$userid);
+	my $album_id = 0;
+	if($c->request->method eq 'POST')	{
+		my $r = $links->search({album_name => $album_name })->next;
+		if (!$r) {
+			$r =  $links->create({
+				album_id   => $max,
+				album_name => $album_name,
+			});
+		}
+		if($r->album_id) {
+			$c->stash(statusmsg => " Successful! to Add album");
+			$album_id = $r->album_id;
+			
+		}
+		$c->log->debug("Debug link".$r->album_id);
+	  }
+   
+     $c->stash(template => 'add_album.tt',albumname=>$album_name,album_id=>$album_id,userid=>$userid);
 }
 
 
