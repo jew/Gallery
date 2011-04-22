@@ -1,0 +1,28 @@
+<center>
+<table>
+	<tr>
+	<td>
+	<img src="/gallery/[% path %]" width="500" height="300"> 
+	</td>
+	<td> 
+	</td>
+	</tr>
+	<tr>
+	<td>
+	Comments :
+	 </td>
+
+	<td> 
+	</td>
+	</tr>
+	[% FOREACH comment IN comments -%]
+	<tr>
+	
+	<td>
+				[%- comment.comment -%]           <a href="/comment/[%comment.picture_id%]/delete?comment_id=[%comment.comment_id%]">DELETE</a>
+				<br/>
+ 	</td>		 
+ 	</tr>
+ 	[% END -%]
+</table> 
+</center>

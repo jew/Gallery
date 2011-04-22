@@ -1,0 +1,10 @@
+<table border="1">
+[% FOREACH album IN albums -%]
+<tr>
+<td><a href="show_pics?album_id=[%album.album_id%]"> <img src="/gallery/[% album.pictures.first.thumbnail %]"> </img> </a> </td>
+</tr>
+<tr>
+<td>[% album.album_name %]</td>
+</tr>
+[% END -%]
+</table> 

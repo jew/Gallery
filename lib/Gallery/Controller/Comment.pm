@@ -69,12 +69,17 @@ sub add :Local :Args(0){
 						comment =>$c->req->param('comment'),
         });
       
-        $c->stash(template => 'comment/add_comment.tt');
+        #$c->stash(template => 'comment/add_comment.tt');
+        $c->response->redirect( ($c->uri_for('/comment/showcomment')).'?picture_id=' .$picture_id );
+       
+        
+        
     }
     else {
         # Dump a log message to the development server debug output
         $c->log->debug('***There are someone who trying to post comment by Get method***');
         $c->stash(template => 'comment/add_comment.tt');
+        
     };
 }
 
@@ -96,6 +101,30 @@ sub delete :Chained('base') :Args(0){
         $c->stash(template => 'comment/delete.tt');
     }; 
 }
+
+
+
+=head2 showcomment after do comment
+
+=cut
+sub showcomment :Local :Args(0){
+    my ( $self, $c) = @_;
+    my $login_user= $c->user->user_id;
+    my $picture_id = $c->request->param('picture_id'); 
+    $c->log->debug("picId--->". $picture_id);
+    #searching for comments
+    my @comments = [$c->model('DB::Comment')->search({picture_id=>$picture_id})->all()];
+    $c->stash(comments=>@comments);
+    #get path : return row
+    my $path = $c->model('DB::Picture')->find($picture_id)->path; 
+    $c->stash(path => $path);
+    $c->stash(template => 'comment/showcomment.tt');
+}
+
+
+
+
+
 =head1 AUTHOR
 
 jew,,,,

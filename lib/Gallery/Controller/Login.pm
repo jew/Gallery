@@ -32,13 +32,9 @@ sub index :Path :Args(0) {
         if ($username && $password) {
             # Attempt to log the user in
             if ($c->authenticate({ username => $username,
-                                   password => $password  } )) {
-                                   	
-                                   	
-                                   	
-                                   	
-                                   	
-					$c->stash(template => 'login.tt',username=>$username);
+                                   password => $password  } )) {                    	
+                    $c->response->redirect($c->uri_for('/album'));             	
+
                 return;
             } else {
                 # Set an error message

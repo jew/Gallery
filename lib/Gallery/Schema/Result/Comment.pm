@@ -47,6 +47,14 @@ __PACKAGE__->add_columns(
   { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
   "comment",
   { data_type => "varchar", is_nullable => 1 },
+  
+  "picture_id",
+  { data_type => "integer", is_nullable => 1 },
+  "album_id",
+  { data_type => "integer", is_nullable => 1 },
+  
+  
+  
   "c_date",
   {
     data_type     => "datetime",

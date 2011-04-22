@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <title>Add Album</title>
+  </head>
+  <body>
+ 	 <div align="center" class="smoothness">
+	  	<form method="post" name="add_album" action"[% c.uri_for('add_album') %]">
+			<table border="1">
+				<tr>
+					<td style="font-size: 13px; font-family: Arial,Helvetica,sans-serif;">
+					Album s name:<input  type="text" name="album_name"  size="37" value="[% albumname %]"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<button type="submit" name="submit"  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" style="background-color: #E6E6E6; font-size: 13px; font-family: Arial,Helvetica,sans-serif;" role="button">
+							Add new album
+						</button>
+						</td>
+				</tr>
+			</table> 	
+		</form>
+	</div>
+  </body>
+</html>
+[% statusmsg %]

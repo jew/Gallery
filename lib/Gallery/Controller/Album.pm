@@ -168,6 +168,21 @@ sub view :Chained('base') :PathPart('view') :Args(0){
     $c->stash(template => 'album/show_pics.tt',pictures=>@pictures,album=>$album);  
 }
 
+
+
+=head2 viewall
+view pictures 
+
+=cut
+
+sub viewall :Chained('base') :PathPart('viewall') :Args(0){
+    my ( $self, $c ) = @_;
+    my $album = $c->stash->{album};
+	my @pictures = [$c->model('DB::Picture')->search({album_id=>$album->album_id()})];
+	$c->log->debug("----------------------------------------------------->".@pictures);
+    $c->stash(template => 'album/showpics.tt',pictures=>@pictures,album=>$album);  
+}
+
 =head2 index
 
 =cut
@@ -190,7 +205,31 @@ sub delete :Chained('base') :PathPart('delete') :Args(0){
     delete.tt');
     }; 
     
-
+=head 5 showall
+=cut
+sub showall :Local :Args(0){
+	my ( $self, $c) = @_;
+	my $albums_rs = $c->model('DB::Album');
+	
+    #Search for album from albumid
+     while ( my $album = $albums_rs->next() ) {
+         my $picture = $album->pictures()->first(); #First picture for each album
+         next if !$picture;
+         $c->model('Thumbnail')->thumbmake( Gallery->path_to('/root/gallery') . '/' . $picture->path );
+     }
+    $c->stash( albums_rs => $albums_rs);
+    $c->stash( template  => 'album/showall.tt' );
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+}
 =head1 AUTHOR
 
 jew,,,,

@@ -1,0 +1,12 @@
+<center>
+	
+		[% FOREACH picture IN pictures -%]
+ 		<a href="/comment/add?picture_id=[%- picture.picture_id -%]">
+ 			<img src="/gallery/[% picture.path %]" width="200" height="150"> 
+ 			</img> 
+ 		</a>	
+ 		[% END -%]
+</center>		
+ 		
+ 		
+ 		

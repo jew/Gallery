@@ -54,11 +54,27 @@ __PACKAGE__->add_columns(
   { data_type => "integer", is_nullable => 0 },
   "user_id",
   { data_type => "integer", is_nullable => 0 },
+  "path",
+  { data_type => "varchar", is_nullable => 0 },
+  "name",
+  { data_type => "varchar", is_nullable => 0 },
+  "thumbnail",
+  { data_type => "varchar", is_nullable => 0 },
+  "LastUpdated",
+  {
+  	data_type     => "datetime",
+    default_value => \"CURRENT_DATE",
+    is_nullable   => 0,
+
+  },
+  
 );
-__PACKAGE__->set_primary_key("picture_id", "album_id", "user_id");
+__PACKAGE__->set_primary_key("picture_id");
 #set relationships
 __PACKAGE__-> belongs_to( "albums","Gallery::Schema::Result::Album",
 	{"foreign.picture_id"=>"self.picture_id"},
+	{ is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
+	{ join_type => "LEFT" },
 );
 
 # Created by DBIx::Class::Schema::Loader v0.07010 @ 2011-04-12 13:56:07

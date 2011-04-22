@@ -7,13 +7,15 @@ use base 'Catalyst::View::TT';
 
 __PACKAGE__->config(
     TEMPLATE_EXTENSION => '.tt',
-    # Set the location for TT files
+    #Set the location for TT files
     INCLUDE_PATH => [
         Gallery->path_to( 'root', 'template' ),
     ],
-
-
+    WRAPPER => 'wrapper.tt',
 );
+
+
+
 
 =head1 NAME
 

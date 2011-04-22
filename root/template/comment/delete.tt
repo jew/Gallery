@@ -1,0 +1,31 @@
+
+<form action="" method="post">
+    <table>
+        
+        <tr>
+            <td>
+            </td>
+            <td>
+                Confirm to delete comment [% album_id %].
+            </td>
+        </tr>
+        <tr>
+            <td>
+                </br>
+                Album Name :
+            </td>
+            <td>
+                </br>
+                [% albums.album_name %]               
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                </br>
+                <input type="submit" value="Delete" />
+            </td>
+        </tr>
+    </table>      
+</form>

@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>Registration. Please fill in the form below.</title>
+</head>
+<body bgcolor="white" text="black" link="blue" alink="blue" vlink="blue" background="" >
+<!-- 295150 -->
+<font face="verdana,arial" size=-1>
+<center><table cellpadding=2 cellspacing=0 border=0>
+<tr><td bgcolor="blue"><table cellpadding=0 cellspacing=0 border=0 width=100%><tr><td bgcolor="blue" align=center style="padding:2;padding-bottom:4"><b><font size=-1 color="white" face="verdana,arial"><b>Registration. Please fill in the form below.</b></font></th></tr>
+<tr><td bgcolor="white" style="padding:5"><br>
+<form method="post" action="">
+<input type="hidden" name="action" value="reg2">
+<input type="hidden" name="user" value="deluxe">
+<center><table>
+<tr><td><font face="verdana,arial" size=-1>Email:</td>
+
+  <td><font face="verdana,arial" size=-1><input type="text" name="_email"></td></tr>
+<tr><td><font face="verdana,arial" size=-1>Login:</td>
+  <td><font face="verdana,arial" size=-1><input type="text" name="_login"></td></tr>
+<tr><td><font face="verdana,arial" size=-1>Choose password:</td>
+  <td><font face="verdana,arial" size=-1><input type="password" name="_password"></td></tr>
+<tr><td><font face="verdana,arial" size=-1>Verify password:</td>
+  <td><font face="verdana,arial" size=-1><input type="password" name="_password2"></td></tr>
+<tr><td><font face="verdana,arial" size=-1>first name:</td>
+<td><font face="verdana,arial" size=-1><input type="password" name="first_name"></td></tr>
+<tr><td><font face="verdana,arial" size=-1>last name:</td>
+<td><font face="verdana,arial" size=-1><input type="password" name="last_name"></td></tr>
+  
+<tr><td><font face="verdana,arial" size=-1>&nbsp;</td>
+  <td><font face="verdana,arial" size=-1><input type="submit" value="Submit"></td></tr>
+
+</table></center>
+</form>
+</td></tr></table></td></tr></table>
+<p></p></body>
+</html>

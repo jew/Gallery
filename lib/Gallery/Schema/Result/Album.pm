@@ -51,6 +51,7 @@ __PACKAGE__->add_columns(
   { data_type => "integer", is_nullable => 0 },
   "album_name",
   { data_type => "varchar", is_nullable => 1 },
+  
   "created_date",
   {
     data_type     => "datetime",
@@ -63,6 +64,7 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("album_id", "user_id");
 #set relationships
 __PACKAGE__-> belongs_to( "users","Gallery::Schema::Result::User",
+
 	{ user_id => "users"},);
 __PACKAGE__-> has_many( "pictures" => 'Gallery::Schema::Result::Picture',
 {"foreign.album_id"=>"self.album_id"},

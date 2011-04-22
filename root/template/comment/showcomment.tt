@@ -1,0 +1,45 @@
+
+<table>
+	<tr>
+		 <td>
+			<img src="/gallery/[% path %]" width="500" height="300"> 
+		</td>
+	
+	</tr>
+	<tr>
+		<td>
+			Comments :
+		</td>
+	</tr>
+	    [% FOREACH comment IN comments -%]
+	<tr>
+	<td>
+			[%- comment.comment -%]     	
+ 	</td>		 
+ 			[% END -%]
+</table> 
+
+<center>
+<table>
+	<tr>
+	<td>
+	
+	</td>
+	<td> 
+	</td>
+	</tr>
+	<tr>
+	<td>
+	<form method="post" action="">
+	<textarea name="comment" cols="40" rows="5">
+	Enter your comments here...
+				</textarea><br>
+				<input type="submit" value="Submit" />
+			</form>
+	 </td>
+
+	<td> 
+	</td>
+	</tr>
+</table> 
+</center>
