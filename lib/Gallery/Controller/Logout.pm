@@ -32,7 +32,7 @@ sub index :Path :Args(0) {
 	# Clear the user's state
 	$c->logout;
 	# Send the user to the starting point
-    $c->response->redirect($c->uri_for('/'));
+    $c->response->redirect($c->uri_for('/home'));
 }
 
 =head1 AUTHOR

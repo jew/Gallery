@@ -1,9 +1,12 @@
-<center>
+[% INCLUDE menu.tt %]
+<div>
 	
 		[% FOREACH picture IN pictures -%]
-				<a href="addcomment?picture_id=[%- picture.picture_id -%]&album_id=[%- album_id -%]&path=[%- picture.path -%]"><img src="/gallery/[% picture.path %]" width="200" height="150"> </img> </a>
+				<a href="addcomment?picture_id=[%- picture.picture_id -%]&album_id=[%- album_id -%]&path=[%- picture.path -%]">
+					<img src="/gallery/[% picture.path %]" width="200" height="150" />
+			   </a>
  		[% END -%]
-</center>		
+</div>		
  		
  		
  		

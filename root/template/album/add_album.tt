@@ -1,26 +1,52 @@
 <html>
   <head>
+  <style type="text/css">
+	.error {
+		font: normal 10px arial;
+    	padding: 3px;
+    	margin: 3px;
+    	background-color: #ffc;
+    	border: 1px solid #c00;
+	}
+  </style>
+  
+ <script type="text/javascript" src="http://dev.jquery.com/view/trunk/plugins/validate/jquery.validate.js"></script>
+  <script>
+	  $(document).ready(function(){
+	    $("#add_album").validate({
+			rules: {
+	        	field: "required"
+	    	}
+	  	});
+	  });
+	  </script>
     <title>Add Album</title>
   </head>
   <body>
  	 <div align="center" class="smoothness">
-	  	<form method="post" name="add_album" action"[% c.uri_for('add_album') %]">
+	  	<form method="post"   id="add_album" name="add_album" action"[% c.uri_for('add_album') %]">
 			<table border="1">
 				<tr>
 					<td style="font-size: 13px; font-family: Arial,Helvetica,sans-serif;">
-					Album s name:<input  type="text" name="album_name"  size="37" value="[% albumname %]"/>
+						Album s name:
+						<input  type="text" name="album_name"  size="37" value="[% albumname %]" class="required"/>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<button type="submit" name="submit"  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" style="background-color: #E6E6E6; font-size: 13px; font-family: Arial,Helvetica,sans-serif;" role="button">
+						<button onclick="redirect();" type="submit" name="submit"  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" style="background-color: #E6E6E6; font-size: 13px; font-family: Arial,Helvetica,sans-serif;" role="button">
 							Add new album
 						</button>
 						</td>
 				</tr>
 			</table> 	
 		</form>
+		<div style="font-size: 13px; font-family: Arial,Helvetica,sans-serif;">
+			[% statusmsg %]
+			<a href="[% c.uri_for('/home') %]">HOME</a>
+		</div>
 	</div>
+		
   </body>
 </html>
-[% statusmsg %]
+

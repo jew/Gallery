@@ -42,13 +42,8 @@ sub index :Path :Args(0){
 sub base :Chained('/') :PathPart('comment') :CaptureArgs(1){
     my ( $self, $c, $picture_id) = @_;
     my $login_user= $c->user->user_id;
-    #$picture_id = $c->request->param('picture_id');
     $c->stash(picture_id => $picture_id);
-  
-   # my $picture = $c->model('DB::Picture')->find({picture_id=>$picture_id});
-    #$c->log->debug("----------->" . $picture_id);
-    #$c->stash(picture => $picture);
-    #$c->stash(template => 'comment/add_comment.tt');
+
 }
 
 =head2 new_comment
@@ -59,6 +54,8 @@ Create  new comment
 sub add :Local :Args(0){
     my ( $self, $c ) = @_;
     my $picture_id = $c->request->param('picture_id');
+    my $login_user= $c->user->user_id;
+    $c->log->debug("->" . $login_user);
     #get path 
     my $path = $c->model('DB::Picture')->find($picture_id)->path; 
     $c->log->debug("path------>" . $path);
@@ -67,13 +64,14 @@ sub add :Local :Args(0){
         $c->model('DB::Comment')->create({
 						picture_id => $picture_id,
 						comment =>$c->req->param('comment'),
+						user_id =>  $login_user,
         });
-      
+        #fixed :
+        #$c->model('DB::UserComment')->create({
+						#user_id => $login_user,				
+       # });
         #$c->stash(template => 'comment/add_comment.tt');
-        $c->response->redirect( ($c->uri_for('/comment/showcomment')).'?picture_id=' .$picture_id );
-       
-        
-        
+        $c->response->redirect( ($c->uri_for('/comment/showcomment')).'?picture_id=' .$picture_id );      
     }
     else {
         # Dump a log message to the development server debug output
@@ -120,10 +118,6 @@ sub showcomment :Local :Args(0){
     $c->stash(path => $path);
     $c->stash(template => 'comment/showcomment.tt');
 }
-
-
-
-
 
 =head1 AUTHOR
 

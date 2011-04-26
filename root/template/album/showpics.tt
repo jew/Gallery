@@ -1,12 +1,30 @@
-<center>
-	
+
+<script type="text/javascript" src="/static/jquery-lightbox/js/jquery.lightbox-0.5.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('a[rel*=lightbox]').lightBox();
+})
+</script>
+
+[% INCLUDE menu.tt %]
+
+<div style ="margin-top: 90px;"/>
+	<div style="font-size: 13px; font-family: Arial,Helvetica,sans-serif; ">
 		[% FOREACH picture IN pictures -%]
- 		<a href="/comment/add?picture_id=[%- picture.picture_id -%]">
- 			<img src="/gallery/[% picture.path %]" width="200" height="150"> 
- 			</img> 
- 		</a>	
+ 			<div style="float: left; margin-right: 20px;margin-top: 20px;">
+ 				<a href="/gallery/[% picture.path %]" rel="lightbox"> 
+ 					<img src="/gallery/[% picture.path %]" width="200" height="150" /> 
+ 				</a>	
+ 			<div>
+	 			<a style="clear: both;" href="/comment/add?picture_id=[%- picture.picture_id -%]">
+	 				comment
+	 			</a>
+			</div>
+ 	</div>
+ 		
  		[% END -%]
-</center>		
+	</div>
  		
- 		
- 		
+
+
+

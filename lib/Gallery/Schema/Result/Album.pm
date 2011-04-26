@@ -48,7 +48,7 @@ __PACKAGE__->table("albums");
 
 __PACKAGE__->add_columns(
   "album_id",
-  { data_type => "integer", is_nullable => 0 },
+  { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
   "album_name",
   { data_type => "varchar", is_nullable => 1 },
   
@@ -61,7 +61,7 @@ __PACKAGE__->add_columns(
   "user_id",
   { data_type => "integer", is_nullable => 0 },
 );
-__PACKAGE__->set_primary_key("album_id", "user_id");
+__PACKAGE__->set_primary_key("album_id");
 #set relationships
 __PACKAGE__-> belongs_to( "users","Gallery::Schema::Result::User",
 

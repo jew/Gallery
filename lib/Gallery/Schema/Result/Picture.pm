@@ -47,7 +47,7 @@ __PACKAGE__->table("pictures");
 
 __PACKAGE__->add_columns(
   "picture_id",
-  { data_type => "integer", is_nullable => 0 },
+  { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
   "description",
   { data_type => "varchar", is_nullable => 1 },
   "album_id",

@@ -1,0 +1,39 @@
+<style>
+#menu li {
+	padding: 5px;
+	marbody {
+    background: url("../images/body_bg.jpg") no-repeat scroll center top transparent;
+    font-family: "Arial","Helvetica","Verdana","sans-serif";
+    font-size: 10px;
+    margin: 0;
+    min-height: 100%;
+    padding: 0 0 20px;
+}gin:0px;
+	list-style: none;
+	display: inline-block;
+}
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#menu li a").button();
+});
+</script>
+<div class="container_12 flick">
+	<div class="grid_12">
+		<div style="border: 0px solid;">
+		<ul id="menu">
+                
+                <li><a href="[% c.uri_for('/home') %]">HOME</a></li>
+                <li><a href="[% c.uri_for('/album/add') %]">ADD ALBUM</a></li>
+                <li><a href="[% c.uri_for('/picture/add') %]">ADD PICTURE</a></li>
+                <li><a href="[% c.uri_for('/album') %]">VIEW YOUR ALBUM</a></li>
+                <li><a href="[% c.uri_for('/album/showall') %]">VIEW OTHER ALBUMS </a></li>
+                [% IF c.user_exists %]
+                <li><a href="[% c.uri_for('/logout') %]">Logout</a></li>
+                [% END %]
+                
+            </ul>
+            
+		</div>
+	</div>
+</div>

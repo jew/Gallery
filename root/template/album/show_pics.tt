@@ -1,12 +1,14 @@
-<center>
+[% INCLUDE menu.tt %]
+<div style ="margin-top: 90px;">
+	<div style="font-size: 13px; font-family: Arial,Helvetica,sans-serif; ">
 	
 		[% FOREACH picture IN pictures -%]
- 		<a href="/comment?picture_id=[%- picture.picture_id -%]">
- 			<img src="/gallery/[% picture.path %]" width="200" height="150"> 
- 			</img> 
- 		</a>	
- 		[% END -%]
-</center>		
- 		
- 		
- 		
+		<div style="float: left; margin-right: 20px;margin-top: 20px;">
+	 		<a href="/comment?picture_id=[%- picture.picture_id -%]">
+	 			<img src="/gallery/[% picture.path %]" width="200" height="150" /> 
+	 			
+	 		</a>	
+	 	</div>
+	[% END -%]
+	</div>
+</div>		

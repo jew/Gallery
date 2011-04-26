@@ -2,76 +2,35 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Gallery</title>
 <link rel="stylesheet" href="/static/grid.css" />
 <link rel="stylesheet" href="/static/jquery-ui/css/flick/jquery-ui-1.8.11.custom.css" />
 <link rel="stylesheet" href="/static/jquery-ui/css/smoothness/jquery-ui-1.8.11.custom.css" />
+<link rel="stylesheet" type="text/css" href="/static/jquery-lightbox/css/jquery.lightbox-0.5.css" media="screen" />
 <script type="text/javascript" src=/static/jquery-ui/js/jquery-1.5.1.min.js/>
 </script>
 <script type="text/javascript" src=/static/jquery-ui/js/jquery-ui-1.8.11.custom.min.js/>
 </script>
-<script type="text/javascript">
-<!--
-$(document).ready(function(){
-	$("#test").draggable();
-});
-//-->
-</script>
-
-<style>
-#menu li {
-	padding: 5px;
-	margin:0px;
-	list-style: none;
-	display: inline-block;
-}
-</style>
-<script type="text/javascript">
-$(document).ready(function(){
-	$("#menu li a").button();
-});
-</script>
 </head>
-<body>
-
-<div class="container_12 flick">
-	<div class="grid_11">
-		<div style="border: 1px solid;">
-		<ul id="menu">
-                [% IF c.user_exists %]
-                <li><a href="#">HOME</a></li>
-                [% END %]
-                <li><a href="[% c.uri_for('/album/add') %]">ADD ALBUM</a></li>
-                <li><a href="[% c.uri_for('/picture/add') %]">ADD PICTURE</a></li>
-                <li><a href="[% c.uri_for('/album') %]">VIEW YOUR ALBUM</a></li>
-                <li><a href="[% c.uri_for('/album/showall') %]">VIEW OTHER ALBUMS </a></li>
-                [% IF c.user_exists %]
-                <li><a href="[% c.uri_for('/logout') %]">Logout</a></li>
-                [% END %]
-                [% IF !c.user_exists %]
-                <a href="login">sign in </a>
-                [%END%]
-            </ul>
-            
-		</div>
-	</div>
-	
-</div>
-
- <div id="body" class="container_12" flick>
+<body  background: url("../images/body_bg.jpg") no-repeat scroll center top transparent;>
+ <div id="body" class="container_12 flick">
      <div class="grid_9 redmond" style="margin-top: 20px;">
      <div style="margin: 0 auto; width: 830px; background-color: #ffffff; border: 0px solid black;">
-        <div style="min-height:400px;">
+        <div id = "main" class ="clearfix">
         [% content %]
+        <!--  <div class ="ui-state-error ui corner-all" style="padding: 0 4px; margin: 6px auto 0 auto; width: 300px; text-align: center;">
+	    <span class="status">[% status_msg %]</span>
+	    <span class="error" >[% error_msg %]</span>-->
+    </div>
         </div>
     </div>
 	</div>
     <div class="grid_3 hot-sneaks" style="margin-top: 20px;">
-        <div class="ui-widget-content ui-corner-all" style="min-height:400px;">
-        </div>
+        
     </div>
 
-</div>
 
+</div>
+	
 </body>
 </html>

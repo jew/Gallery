@@ -1,31 +1,9 @@
-
-<form action="" method="post">
-    <table>
-        
-        <tr>
-            <td>
-            </td>
-            <td>
-                Confirm to delete Picture [% picture_id %].
-            </td>
-        </tr>
-        <tr>
-            <td>
-                </br>
-                Album Name :
-            </td>
-            <td>
-                </br>
-                [% picture.path %]               
-            </td>
-        </tr>
-        <tr>
-            <td>
-            </td>
-            <td>
-                </br>
-                <input type="submit" value="Delete" />
-            </td>
-        </tr>
-    </table>      
-</form>
+<div class ="ui-state-error ui corner-all" style="padding: 0 4px; margin: 6px auto 0 auto; width: 300px; text-align: center;">
+	<form action="" method="post">
+		<div style="font-size: 13px; font-family: Arial,Helvetica,sans-serif;">
+			Confirm to delete Picture [% picture_id %].   
+		</div>
+		<div><img src="/gallery/[% picture.path %]" width="200" height="150" />  </div>        
+        <div><input type="submit" value="Delete" /></div>
+	</form>
+</div>

@@ -35,13 +35,18 @@
 						<input type="submit" name="submit" value="Add new image" />
 					</div>
 				</form>
+				<div  style="font-size: 13px; font-family: Arial,Helvetica,sans-serif;">
+					[% user %]
+					[% error_msg %]
+					[%status_msg%]
+					<a href="[% c.uri_for('/home') %]">HOME</a>
+				
+				</div>
 			</div>
 		</div>
   </body>
 </html>
-[% user %]
-[% error_msg %]
-[%status_msg%]
+
 
 
    

@@ -50,7 +50,7 @@ __PACKAGE__->add_columns(
   
   "picture_id",
   { data_type => "integer", is_nullable => 1 },
-  "album_id",
+  "user_id",
   { data_type => "integer", is_nullable => 1 },
   
   

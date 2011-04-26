@@ -1,45 +1,31 @@
-
-<table>
-	<tr>
-		 <td>
-			<img src="/gallery/[% path %]" width="500" height="300"> 
-		</td>
-	
-	</tr>
-	<tr>
-		<td>
-			Comments :
-		</td>
-	</tr>
-	    [% FOREACH comment IN comments -%]
-	<tr>
-	<td>
-			[%- comment.comment -%]     	
- 	</td>		 
- 			[% END -%]
-</table> 
-
-<center>
-<table>
-	<tr>
-	<td>
-	
-	</td>
-	<td> 
-	</td>
-	</tr>
-	<tr>
-	<td>
-	<form method="post" action="">
-	<textarea name="comment" cols="40" rows="5">
-	Enter your comments here...
-				</textarea><br>
+[% INCLUDE menu.tt %] 	
+<div id="body" class="flick" >
+<div style="margin-top:50px;">	
+	<div align="center" >
+		<img src="/gallery/[% path %]" width="500" height="300" >
+	</div>	
+	<div align="center">
+		<div  style="width: 500px;">
+			[% FOREACH comment IN comments -%]
+				<div class ="ui-state-highlight ui corner-all"  style ="margin-top: 50px; text-align: center;">
+					<p style="font-size: 13px; font-family: Arial,Helvetica,sans-serif;">
+						[%- comment.comment -%]
+					</p>     
+					<p style="font-size: 13px; font-family: Arial,Helvetica,sans-serif;">
+						date : [%- comment.c_date -%]         
+					</p>
+				</div>	
+			[% END -%]
+		</div>
+	</div>
+	<div align="center">
+		<div style="margin-top: 50px; align="center">
+			<form method="post" action="/comment/add?picture_id=[% comment.picture_id %]">
+				<textarea name="comment" cols="40" rows="5">
+				</textarea>
+				<br> 
 				<input type="submit" value="Submit" />
 			</form>
-	 </td>
-
-	<td> 
-	</td>
-	</tr>
-</table> 
-</center>
+	</div>
+</div>
+</div>

@@ -2,50 +2,48 @@
 <html>
 <head>
 <style type="text/css">
-div.img
-  {
-  margin:2px;
-  border:1px solid #0000ff;
-  height:auto;
-  width:auto;
-  float:left;
-  text-align:center;
-  }
-div.img img
-  {
-  display:inline;
-  margin:3px;
-  border:1px solid #ffffff;
-  }
-div.img a:hover img
-  {
-  border:1px solid #0000ff;
-  }
-div.desc
-  {
-  text-align:center;
-  font-weight:normal;
-  width:120px;
-  margin:2px;
-  }
-  
- p.margin
-{
-margin-top:100px;
-margin-right:50px;
+div.img {
+	margin: 2px;
+	border: 1px solid #0000ff;
+	height: auto;
+	width: auto;
+	float: left;
+	text-align: center;
+}
 
+div.img img {
+	display: inline;
+	margin: 3px;
+	border: 1px solid #ffffff;
+}
+
+div.img a:hover img {
+	border: 1px solid #0000ff;
+}
+
+div.desc {
+	text-align: center;
+	font-weight: normal;
+	width: 120px;
+	margin: 2px;
+}
+
+p.margin {
+	margin-top: 100px;
+	margin-right: 50px;
 }
 </style>
 </head>
 <body>
-[% CALL albums_rs.reset %]
-<p class="margin">ALL ALBUMS :</p>
-[% WHILE ( album = albums_rs.next ) -%]
-    [% IF album.pictures %]
-       <div class="img">
-           <a href="/album/[%album.album_id%]/view"> <img src="/gallery/[% album.pictures.first.thumbnail %]"> </img> </a>  
-           <div class="desc">[% album.album_name %]</div>
-       </div>
-    [% END %]
-[% END -%]
-
+[% INCLUDE menu.tt %]
+	[% CALL albums_rs.reset %]
+	<p class="margin">ALL ALBUMS :</p>
+	[% WHILE ( album = albums_rs.next ) -%] [% IF album.pictures %]
+	<div class="img">
+		<a href="/album/[%album.album_id%]/view"> <img
+			src="/gallery/[% album.pictures.first.thumbnail %]"> </img> </a>
+		<div class="desc">[% album.album_name %]</div>
+	</div>
+	[% END %] 
+	[% END -%]
+</body>

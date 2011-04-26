@@ -33,7 +33,7 @@ sub index :Path :Args(0) {
             # Attempt to log the user in
             if ($c->authenticate({ username => $username,
                                    password => $password  } )) {                    	
-                    $c->response->redirect($c->uri_for('/album'));             	
+                    $c->response->redirect($c->uri_for('/home'));             	
 
                 return;
             } else {

@@ -28,7 +28,7 @@ Catalyst Controller.
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 
-    $c->response->body('Matched Gallery::Controller::Picture in Picture.');
+   
 }
 
 
@@ -66,7 +66,7 @@ sub add :Local :Args(0) {
 		$c->stash(template => 'picture/upload.tt',result=>'No upload');
     	return 1;
     }
-    #find max of picture_id 
+    #find max of picture_id  $c->response->body('Matched Gallery::Controller::Picture in Picture.');
 	my $links = $c->model('DB::Picture')->search_rs( { user_id => $login_user });
 	my $picture_ids = $links->get_column('picture_id');
 	my $maxpicture_id = $picture_ids->max;
@@ -138,7 +138,7 @@ sub delete :Chained('base') :PathPart('delete') :Args(0){
     my ( $self, $c) = @_;
      if($c->req->method eq 'POST') {
         $c->stash->{picture}->delete;
-        $c->response->redirect($c->uri_for('/picture'));
+        $c->response->redirect($c->uri_for('/album'));
     }
     else {
         $c->stash(title    => 'Delete Picture');
