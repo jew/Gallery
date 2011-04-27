@@ -46,85 +46,52 @@ sub base :Chained('/') :PathPart('album') :CaptureArgs(1){
     #Thumbnail
     my $thumb = $c->model('DB::Picture')->first();
     next if !$thumb;
-    #$c->log->debug("----------------------->". Dumper( Gallery->path_to('/gallery/') . $picture->path) );
-    #my $pic = Gallery->path_to('/root/gallery') . '/' . $picture->path;
     my $pic = Gallery->path_to('/root/gallery') . '/' . $thumb->thumbnail;
 	$c->log->debug("---------->".$pic); 
 	$c->model('Thumbnail')->thumbmake($pic);
 	$c->log->debug("--------->".$thumb->thumbnail); 
-    #$c->stash( template => 'showpic.tt',thumbnail => $thumb->thumbnail);
 	$c->stash(thumbnail => $thumb->thumbnail); 
     $c->stash(album => $album);
-   # $c->stash(template => 'album/list.tt');
 }
 
 =head4 add
-
+add album 
 =cut
 
 sub add :Local :Args(0){
     my ( $self, $c ) = @_;
    	my $album_name = $c->request->param('album_name');
    	my $userid = $c->user->user_id;
-	#my $links = $c->model('DB::Album')->search_rs( { user_id => 1 }, {order_by => 'album_id DESC'})->single();
-	#my $link = $links->album_id;
-	#$c->log->debug("max user id === $link");
-	# TODO: FIX this. This will only work for one user, since max should be unique for all users
-	# and now it is only finding the max id for this user.
-	my $links = $c->model('DB::Album')->search_rs( { user_id => $userid });
-	#my $album_ids = $links->get_column('album_id');
-	#my $maxalbum_id = $album_ids->max;
-	#$c->log->debug("maxalbum_id === $maxalbum_id");
-	#my $max;
-	#if($maxalbum_id ==0){
-	#	$max = 1;
-	#}
-	#else {
-	#	$max = $maxalbum_id+1;
-	#}
-	#my $album_id = 0;
-	#if($c->request->method eq 'POST')	{
-	#	my $r = $links->search({album_name => $album_name })->next;
-	#	if (!$r) {
-		#	my $r =  $links->create({
-				#album_id   => $max,
-			#	album_name => $album_name,
-		#	});	
-		#}
-		#if($r->album_id) {
-			#$c->stash(statusmsg => " Successful! to Add album");
-			#$album_id = $r->album_id;	
-	#	}
-	#	$c->log->debug("Debug link".$r->album_id);
-	 # }
-     #$c->stash(template => 'album/add_album.tt',albumname=>$album_name,album_id=>$album_id,userid=>$userid);    
+    if($c->request->method eq 'POST') {
+		my $r =  $c->model('DB::Album')->create({
+			album_name => $album_name,
+			user_id => $userid
+		});	
+			if($r->album_id) {
+				$c->stash(statusmsg => " Successful! to Add album");	
+			}
      
-     my $r =  $c->model('DB::Album')->create({
-				album_name => $album_name,
-				user_id => $userid
-			});	
-		$c->stash(template => 'album/add_album.tt');   	
+			$c->log->debug("Debug link".$r->album_id);
+	  } 
+		$c->stash(template => 'album/add_album.tt');
 }
-
-
 =head5 view
-view user album
+view album of user 
+menu : View your album->click on album then show pic
 =cut
 
 sub view :Chained('base') :PathPart('view') :Args(0){
     my ( $self, $c ) = @_;
     my $album = $c->stash->{album};
+    #get album_id from chain 
 	my @pictures = [$c->model('DB::Picture')->search({album_id=>$album->album_id()})];
-	$c->log->debug("----------------------------------------------------->".@pictures);
+	#$c->log->debug("----------------------------------------------------->".@pictures);
     $c->stash(template => 'album/show_pics.tt',pictures=>@pictures,album=>$album);  
 }
-
-
 
 =head6 viewall
 view other album and can comment 
 view pictures 
-
 =cut
 sub viewall :Chained('base') :PathPart('viewall') :Args(0){
     my ( $self, $c ) = @_;
@@ -155,7 +122,8 @@ sub delete :Chained('base') :PathPart('delete') :Args(0){
     }; 
     
 =head 8 showall
-
+From menu : view other album
+shows album of other user
 =cut
 sub showall :Local :Args(0){
 	my ( $self, $c) = @_;

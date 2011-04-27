@@ -16,12 +16,11 @@ $(document).ready(function(){
  					<img src="/gallery/[% picture.path %]" width="200" height="150" /> 
  				</a>	
  			<div>
-	 			<a style="clear: both;" href="/comment/add?picture_id=[%- picture.picture_id -%]">
+	 			<a style="clear: both;" href="/comment/showcomment?picture_id=[%- picture.picture_id -%]">
 	 				comment
 	 			</a>
 			</div>
  	</div>
- 		
  		[% END -%]
 	</div>
  		

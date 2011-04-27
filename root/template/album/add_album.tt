@@ -1,30 +1,11 @@
 <html>
   <head>
-  <style type="text/css">
-	.error {
-		font: normal 10px arial;
-    	padding: 3px;
-    	margin: 3px;
-    	background-color: #ffc;
-    	border: 1px solid #c00;
-	}
-  </style>
-  
- <script type="text/javascript" src="http://dev.jquery.com/view/trunk/plugins/validate/jquery.validate.js"></script>
-  <script>
-	  $(document).ready(function(){
-	    $("#add_album").validate({
-			rules: {
-	        	field: "required"
-	    	}
-	  	});
-	  });
 	  </script>
     <title>Add Album</title>
   </head>
   <body>
  	 <div align="center" class="smoothness">
-	  	<form method="post"   id="add_album" name="add_album" action"[% c.uri_for('add_album') %]">
+	  	<form method="post"   id="add_album" name="add_album" action"[% c.uri_for('album/add') %]">
 			<table border="1">
 				<tr>
 					<td style="font-size: 13px; font-family: Arial,Helvetica,sans-serif;">

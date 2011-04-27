@@ -12,25 +12,17 @@
 <script type="text/javascript" src=/static/jquery-ui/js/jquery-ui-1.8.11.custom.min.js/>
 </script>
 </head>
-<body  background: url("../images/body_bg.jpg") no-repeat scroll center top transparent;>
+<body >
  <div id="body" class="container_12 flick">
      <div class="grid_9 redmond" style="margin-top: 20px;">
-     <div style="margin: 0 auto; width: 830px; background-color: #ffffff; border: 0px solid black;">
-        <div id = "main" class ="clearfix">
-        [% content %]
-        <!--  <div class ="ui-state-error ui corner-all" style="padding: 0 4px; margin: 6px auto 0 auto; width: 300px; text-align: center;">
-	    <span class="status">[% status_msg %]</span>
-	    <span class="error" >[% error_msg %]</span>-->
-    </div>
-        </div>
-    </div>
+     	<div style="margin: 0 auto; width: 830px; background-color: #ffffff; border: 0px solid black;">
+	        <div id = "main" class ="clearfix">
+	        [% content %]
+	    	</div>
+    	</div>
 	</div>
-    <div class="grid_3 hot-sneaks" style="margin-top: 20px;">
-        
-    </div>
-
-
-</div>
-	
+   <div class="grid_3 hot-sneaks" style="margin-top: 20px;">    
+   </div>
+</div>	
 </body>
 </html>

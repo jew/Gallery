@@ -18,14 +18,14 @@ Catalyst Controller.
 
 
 =head2 index
-
+show picture and comment of user album and user can delete pic and comment 
 =cut
 
 sub index :Path :Args(0){
     my ( $self, $c, $picture_id) = @_;
     my $login_user= $c->user->user_id;
     $picture_id = $c->request->param('picture_id');
-    $c->log->debug("picId--->". $picture_id);
+    #$c->log->debug("picId--->". $picture_id);
     #searching for comments
     my @comments = [$c->model('DB::Comment')->search({picture_id=>$picture_id})->all()];
     $c->stash(comments=>@comments);
@@ -33,6 +33,7 @@ sub index :Path :Args(0){
     my $path = $c->model('DB::Picture')->find($picture_id)->path; 
     $c->stash(path => $path);
     $c->stash(template => 'comment/list.tt');
+    $c->stash(picture_id=>$picture_id);
 }
 
 =head3 base 
@@ -41,7 +42,6 @@ sub index :Path :Args(0){
 
 sub base :Chained('/') :PathPart('comment') :CaptureArgs(1){
     my ( $self, $c, $picture_id) = @_;
-    my $login_user= $c->user->user_id;
     $c->stash(picture_id => $picture_id);
 
 }
@@ -66,23 +66,17 @@ sub add :Local :Args(0){
 						comment =>$c->req->param('comment'),
 						user_id =>  $login_user,
         });
-        #fixed :
-        #$c->model('DB::UserComment')->create({
-						#user_id => $login_user,				
-       # });
-        #$c->stash(template => 'comment/add_comment.tt');
         $c->response->redirect( ($c->uri_for('/comment/showcomment')).'?picture_id=' .$picture_id );      
     }
     else {
-        # Dump a log message to the development server debug output
-        $c->log->debug('***There are someone who trying to post comment by Get method***');
         $c->stash(template => 'comment/add_comment.tt');
+        #$c->stash(template => 'comment/showcomment.tt');
         
     };
 }
 
 =head2 index
-
+delete comment
 =cut
 
 sub delete :Chained('base') :Args(0){
@@ -90,8 +84,8 @@ sub delete :Chained('base') :Args(0){
  	my $comment_id = $c->request->param('comment_id'); 
     if($c->req->method eq 'POST') {
     	#delete comment	
-	    $comment_id = $c->request->param('comment_id');
 		$c->model('DB::Comment')->find($comment_id)->delete;
+		#stash->{picture_id} from chain
         $c->response->redirect($c->uri_for('/comment', { picture_id => $c->stash->{picture_id} } ));
     }
     else {
@@ -116,7 +110,7 @@ sub showcomment :Local :Args(0){
     #get path : return row
     my $path = $c->model('DB::Picture')->find($picture_id)->path; 
     $c->stash(path => $path);
-    $c->stash(template => 'comment/showcomment.tt');
+    $c->stash(template => 'comment/showcomment.tt',picture_id=>$picture_id);
 }
 
 =head1 AUTHOR

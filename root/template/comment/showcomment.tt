@@ -20,7 +20,7 @@
 	</div>
 	<div align="center">
 		<div style="margin-top: 50px; align="center">
-			<form method="post" action="/comment/add?picture_id=[% comment.picture_id %]">
+			<form method="post" action="/comment/add?picture_id=[% picture_id %]">
 				<textarea name="comment" cols="40" rows="5">
 				</textarea>
 				<br> 

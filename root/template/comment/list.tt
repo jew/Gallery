@@ -21,7 +21,7 @@
 				</p>
 			</div>	
 		[% END -%]
-	 <a href="/picture/[%comment.picture_id%]/delete">
+	 <a href="/picture/[%picture_id%]/delete">
 	 	Delete this picture
 	 </a>
 </div>

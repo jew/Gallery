@@ -56,5 +56,6 @@ margin-right:50px;
 		[% INCLUDE login.tt %] 
 	</div>
 </div>	
+<hr></hr>
 </body>
 </html>

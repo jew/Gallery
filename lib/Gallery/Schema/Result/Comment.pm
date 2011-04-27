@@ -64,8 +64,8 @@ __PACKAGE__->add_columns(
 );
 __PACKAGE__->set_primary_key("comment_id");
 #set relationships
-__PACKAGE__-> has_many( 'usercomments' => 'Gallery::Schema::Result::UserComment', { "foreign.comment_id" => "self.comment_id" });
-__PACKAGE__-> many_to_many( uses => 'usercomments', 'user');
+
+
 # Created by DBIx::Class::Schema::Loader v0.07010 @ 2011-04-12 13:56:07
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+s79nlj9/GyBpV0DO5hvwg
 

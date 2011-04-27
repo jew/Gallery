@@ -80,8 +80,8 @@ sub add :Local :Args(0) {
 		$max = $maxpicture_id+1;
 	}
 	#debug Max picture_id 
-	$c->log->debug("MAX PIC ID --->".$max);
-	$c->log->debug("imagegallerypath------------>".	$imagegallerypath);
+	#$c->log->debug("MAX PIC ID --->".$max);
+	#$c->log->debug("imagegallerypath------------>".	$imagegallerypath);
 	#$c->log->debug("DEBUG UPLOAD" .$upload);		
 
     #Use random name in gallery folder / store imagename in DB
@@ -92,12 +92,12 @@ sub add :Local :Args(0) {
     #$c->log->debug("Upload Basename-------->".$upload->basename);
    	#$c->log->debug('*** Upload result: '.$upload_result.' name:'.$imagename.' tmp:'.$imagetmpname.' tempname: '.$upload->tempname);
 	#$c->log->debug("basename==================k> ".$upload->tempname);
-	$c->log->debug("pictureID---->".$max);
-	$c->log->debug("path--->" . $imagetmpname);
-	$c->log->debug("name--->".$imagename);
-	$c->log->debug("user_id---->".  $login_user);
-	$c->log->debug("albumid----->". $album_id);
-	$c->log->debug("-description-->".$description);
+	#$c->log->debug("pictureID---->".$max);
+	#$c->log->debug("path--->" . $imagetmpname);
+	#$c->log->debug("name--->".$imagename);
+	#$c->log->debug("user_id---->".  $login_user);
+	#$c->log->debug("albumid----->". $album_id);
+	#$c->log->debug("-description-->".$description);
 	#If upload success ==> continue
    		if ($upload_result==1) {
 			$c->stash(status_msg => "Upload complete!");

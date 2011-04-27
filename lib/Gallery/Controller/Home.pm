@@ -25,7 +25,7 @@ sub index :Path :Args(0) {
 	my ( $self, $c) = @_;
 	my $albums_rs = $c->model('DB::Album');
 	
-    #Search for album from albumid
+    #Search for first pic to make thumbnail
      while ( my $album = $albums_rs->next() ) {
          my $picture = $album->pictures()->first(); #First picture for each album
          next if !$picture;

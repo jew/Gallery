@@ -42,7 +42,7 @@ margin-right:50px;
 [% CALL albums_rs.reset %]
 <p class="margin" style="font-size: 13px; font-family: Arial,Helvetica,sans-serif;">ALL ALBUMS :</p>
 [% WHILE ( album = albums_rs.next ) -%]
- [%IF album.user_id != c.user_exists%]
+ [%IF album.user_id != c.user.user_id%]
     [% IF album.pictures %]
        <div class="img">
            <a href="/album/[%album.album_id%]/viewall"> <img src="/gallery/[% album.pictures.first.thumbnail %]"> </img> </a>  

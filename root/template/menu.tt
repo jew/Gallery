@@ -18,7 +18,7 @@ $(document).ready(function(){
 	$("#menu li a").button();
 });
 </script>
-<div class="container_12 flick">
+<div class="container_12 flick" style="margin-left= 0px;">
 	<div class="grid_12">
 		<div style="border: 0px solid;">
 		<ul id="menu">

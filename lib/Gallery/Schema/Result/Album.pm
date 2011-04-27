@@ -48,7 +48,7 @@ __PACKAGE__->table("albums");
 
 __PACKAGE__->add_columns(
   "album_id",
-  { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
+  { data_type => "integer", is_auto_increment => 1},
   "album_name",
   { data_type => "varchar", is_nullable => 1 },
   
