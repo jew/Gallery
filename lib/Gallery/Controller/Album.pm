@@ -35,8 +35,7 @@ sub index :Path :Args(0){
     $c->stash( template  => 'album/list.tt' );
 }
 
-=head3 index
-
+=head3 base
 =cut
 sub base :Chained('/') :PathPart('album') :CaptureArgs(1){
     my ( $self, $c, $album_id ) = @_;

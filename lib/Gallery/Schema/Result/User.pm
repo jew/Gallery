@@ -74,9 +74,9 @@ __PACKAGE__->set_primary_key("user_id");
 #set relationships
 __PACKAGE__->has_many("albums" => 'Gallery::Schema::Result::Album',
 {"foreign.user_id"=>"self.user_id"},);
-__PACKAGE__->has_many("user_comments" => 'Gallery::Schema::Result::UserComment',
+__PACKAGE__->has_many("comments" => 'Gallery::Schema::Result::Comment',
 {"foreign.user_id"=>"self.user_id"},);
-__PACKAGE__->many_to_many("comments" => 'usercomment','comment');
+#__PACKAGE__->many_to_many("comments" => 'usercomment','comment');
 
 # Created by DBIx::Class::Schema::Loader v0.07010 @ 2011-04-12 13:56:07
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:IQDs5n+lOA+hR+BFD+5FAw

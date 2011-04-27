@@ -31,9 +31,9 @@ sub index :Path :Args(0) {
    
 }
 
-
-=head3 index
-
+=head3 base
+get picture_id
+Store the ResultSet from Picture in stash so it's available for other methods
 =cut
 
 sub base :Chained('/') :PathPart('picture') :CaptureArgs(1){
@@ -44,12 +44,12 @@ sub base :Chained('/') :PathPart('picture') :CaptureArgs(1){
     $c->stash(template => 'picture/show_pics.tt');
 }
 
-=head3 add picture to table Picture
-
+=head3 add
+add picture 
 =cut
 sub add :Local :Args(0) {
     my ( $self, $c ) = @_;   
-      # Retrieve the values from the form
+    # Retrieve the values from the form
 	my $imagepath   = $c->request->params->{imagepath}    || '';
 	my $imagename   = $c->request->params->{imagename}    || '';
 	my $description   = $c->request->params->{description}    || '';
@@ -131,7 +131,7 @@ sub add :Local :Args(0) {
 }
 
 =head2 delete
-
+delete picture
 =cut
 #--------------------------------------------------------------------------------ว๊ากกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกก
 sub delete :Chained('base') :PathPart('delete') :Args(0){ 
@@ -143,7 +143,7 @@ sub delete :Chained('base') :PathPart('delete') :Args(0){
     else {
         $c->stash(title    => 'Delete Picture');
         $c->stash(template => 'picture/delete.tt');
-    }; 
+}; 
 
 =head1 AUTHOR
 

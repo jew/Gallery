@@ -18,6 +18,7 @@ Catalyst Controller.
 
 
 =head2 index
+From menu: view your album
 show picture and comment of user album and user can delete pic and comment 
 =cut
 
@@ -27,7 +28,7 @@ sub index :Path :Args(0){
     $picture_id = $c->request->param('picture_id');
     #$c->log->debug("picId--->". $picture_id);
     #searching for comments
-    my @comments = [$c->model('DB::Comment')->search({picture_id=>$picture_id})->all()];
+    my @comments = [$c->model('DB::Comment')->search({picture_id=>$picture_id}, {order_by => 'c_date DESC'})->all()];
     $c->stash(comments=>@comments);
     #get path : return row
     my $path = $c->model('DB::Picture')->find($picture_id)->path; 
@@ -37,9 +38,8 @@ sub index :Path :Args(0){
 }
 
 =head3 base 
-
+get picture_id
 =cut
-
 sub base :Chained('/') :PathPart('comment') :CaptureArgs(1){
     my ( $self, $c, $picture_id) = @_;
     $c->stash(picture_id => $picture_id);
@@ -47,9 +47,7 @@ sub base :Chained('/') :PathPart('comment') :CaptureArgs(1){
 }
 
 =head2 new_comment
-
 Create  new comment
-
 =cut
 sub add :Local :Args(0){
     my ( $self, $c ) = @_;
@@ -75,7 +73,7 @@ sub add :Local :Args(0){
     };
 }
 
-=head2 index
+=head2 delete
 delete comment
 =cut
 
@@ -96,8 +94,8 @@ sub delete :Chained('base') :Args(0){
 
 
 
-=head2 showcomment after do comment
-
+=head2 
+showcomment after do comment
 =cut
 sub showcomment :Local :Args(0){
     my ( $self, $c) = @_;

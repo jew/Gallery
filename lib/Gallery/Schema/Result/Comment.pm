@@ -46,15 +46,11 @@ __PACKAGE__->add_columns(
   "comment_id",
   { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
   "comment",
-  { data_type => "varchar", is_nullable => 1 },
-  
+  { data_type => "varchar", is_nullable => 1 }, 
   "picture_id",
   { data_type => "integer", is_nullable => 1 },
   "user_id",
   { data_type => "integer", is_nullable => 1 },
-  
-  
-  
   "c_date",
   {
     data_type     => "datetime",
@@ -64,7 +60,8 @@ __PACKAGE__->add_columns(
 );
 __PACKAGE__->set_primary_key("comment_id");
 #set relationships
-
+__PACKAGE__-> belongs_to( "user","Gallery::Schema::Result::User",
+	{ user_id => "user_id"},);
 
 # Created by DBIx::Class::Schema::Loader v0.07010 @ 2011-04-12 13:56:07
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+s79nlj9/GyBpV0DO5hvwg

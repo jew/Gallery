@@ -1,10 +1,6 @@
-<html>
-  <head>
-    <title>Add Album</title>
-  </head>
-  <body>
-  	<div class="container_12 flick">
-  		<div class="grid_3">
+
+  	<div  >
+  		<div>
 			<form method="post" name='upload' action="" ENCTYPE="multipart/form-data" id="upload_image_form">
 			<select  name="album_id">
 			[% FOREACH album IN albums -%]
@@ -44,8 +40,6 @@
 				</div>
 			</div>
 		</div>
-  </body>
-</html>
 
 
 

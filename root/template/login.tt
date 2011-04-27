@@ -49,9 +49,12 @@
 									</table>
 					</table>
 		[% IF error_msg %]
-	<div class ="ui-state-error ui corner-all" style="padding: 0 4px; margin: 6px auto 0 auto; width: 300px; text-align: center;">
-	    <span class="status">[% status_msg %]</span>
-	    <span class="error" >[% error_msg %]</span>
-	[%END%]
+			<div class ="ui-state-error ui corner-all" style="padding: 0 4px; margin: 6px auto 0 auto; width: 300px; text-align: center;">
+			    <span class="status">[% status_msg %]</span>
+			    <span class="error" >[% error_msg %]</span>
+	   [%END%]
+	   [% IF c.user_exists %]
+	   <p style="font-size: 13px; font-family: Arial,Helvetica,sans-serif;">Hello [%c.user.username%]</p>
+	   [%END%]
 
 
