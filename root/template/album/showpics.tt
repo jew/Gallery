@@ -13,8 +13,12 @@ $(document).ready(function(){
 		[% FOREACH picture IN pictures -%]
  			<div style="float: left; margin-right: 20px;margin-top: 20px;">
  				<a href="/gallery/[% picture.path %]" rel="lightbox"> 
- 					<img src="/gallery/[% picture.path %]" width="200" height="150" /> 
- 				</a>	
+ 					<img src="/gallery/[% picture.path %]" width="200" height="150" alt="[%picture.name%]" /> 
+ 				</a>
+ 				<div>
+ 					[%picture.name%] : [%picture.description%]	
+ 				</div>
+ 				
  			<div>
 	 			<a style="clear: both;" href="/comment/showcomment?picture_id=[%- picture.picture_id -%]">
 	 				comment

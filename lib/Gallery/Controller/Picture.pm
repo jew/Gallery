@@ -38,7 +38,6 @@ Store the ResultSet from Picture in stash so it's available for other methods
 
 sub base :Chained('/') :PathPart('picture') :CaptureArgs(1){
     my ( $self, $c,$picture_id) = @_;
-    my $login_user= $c->user->user_id;
     $c->stash(picture_id =>  $picture_id);
     $c->stash(picture => $c->model('DB::Picture')->search({picture_id=>$picture_id}));
     $c->stash(template => 'picture/show_pics.tt');
@@ -103,7 +102,7 @@ sub add :Local :Args(0) {
 			$c->stash(status_msg => "Upload complete!");
 			#Save image to table 'pictures'
 			my $picture= $c->model('DB::Picture')->update_or_create({
-						picture_id =>$max,
+						#picture_id =>$max,
 						path => $imagetmpname,
 						name  => $imagename,
 						description => $description,

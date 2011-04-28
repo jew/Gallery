@@ -65,7 +65,7 @@ sub auto :Private {
         #   if ($c->action eq $c->controller('Login')->action_for('index'))
         # to only allow unauthenticated access to the 'index' action we
         # added above.
-	if ($c->controller eq $c->controller('Login') or $c->controller eq $c->controller('Home')) {
+	if ($c->controller eq $c->controller('Login') or $c->controller eq $c->controller('Home')or $c->controller eq $c->controller('')) {
             return 1;
      }
 

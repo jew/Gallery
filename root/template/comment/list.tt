@@ -16,8 +16,8 @@
 					[%
 					
 					    date.format(
-                		time   = comment.c_date.iso,
-                		format = '%d-%B-%y',
+                		date   = comment.c_date.iso,
+                		format = '%A-%B-%y',
             			)
             		%] 
             		

@@ -1,10 +1,22 @@
 <html>
   <head>
+	  <script type="text/javascript">
+	      function validateForm() 
+	          {
+	              var x=document.forms["myForm"]["album_name"].value
+	              if (x==null || x=="")
+	                  {
+	  				      alert("Album name must be filled out");
+	                      return false;
+	                  }
+	           }
+	 </script>
+
     <title>Add Album</title>
   </head>
   <body>
  	 <div align="center" class="smoothness">
-	  	<form method="post"   id="add_album" name="add_album" action"[% c.uri_for('album/add') %]">
+	  	<form method="post"   id="add_album" name="myForm" action"[% c.uri_for('album/add') %]" onsubmit="return validateForm()">
 			<table border="1">
 				<tr>
 					<td style="font-size: 13px; font-family: Arial,Helvetica,sans-serif;">

@@ -1,12 +1,25 @@
-
+<html>
+  <head>
+	<script type="text/javascript">
+		function validateForm() {
+			var x = document.forms["upload"]["imadepath"].value
+			if (x==null || x==" ")
+			 {
+			    alert("please choose the picture");
+	            return false;
+	         }
+		}
+	</script>
+ </head>
+  <body>
   	<div  >
   		<div>
-			<form method="post" name='upload' action="" ENCTYPE="multipart/form-data" id="upload_image_form">
-			<select  name="album_id">
-			[% FOREACH album IN albums -%]
-			  <option value ="[% album.album_id %]" >[% album.album_name %]</option>
-			[% END %]
-			</select>
+			<form method="post" name='upload' action="" ENCTYPE="multipart/form-data" id="upload_image_form" onsubmit="return validateForm()">
+				<select  name="album_id">
+					[% FOREACH album IN albums -%]
+				  		<option value ="[% album.album_id %]" >[% album.album_name %]</option>
+					[% END %]
+				</select>
 					<div >
 						<label for="imagepath" style="font-size: 13px; font-family: Arial,Helvetica,sans-serif;">File path :</label>
 						<div >
@@ -40,6 +53,8 @@
 				</div>
 			</div>
 		</div>
+  </body>
+</html>
 
 
 

@@ -62,6 +62,8 @@ __PACKAGE__->set_primary_key("comment_id");
 #set relationships
 __PACKAGE__-> belongs_to( "user","Gallery::Schema::Result::User",
 	{ user_id => "user_id"},);
+__PACKAGE__-> belongs_to( "picture","Gallery::Schema::Result::Picture",
+	{ picture_id => "picture_id"},);
 
 # Created by DBIx::Class::Schema::Loader v0.07010 @ 2011-04-12 13:56:07
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+s79nlj9/GyBpV0DO5hvwg

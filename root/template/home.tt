@@ -5,7 +5,7 @@
 div.img
   {
   margin:2px;
-  border:1px solid #0000ff;
+  border:1px solid #C0C0C0;
   height:auto;
   width:auto;
   float:left;
@@ -36,26 +36,60 @@ margin-right:50px;
 
 }
 </style>
+<style type="text/css">
+#galleries-noticed
+.gallery-case {
+    background: /static/images/gallerycase.gif no-repeat scroll 0 0 transparent;
+    height: 95px;
+    margin: 0 3px 0 0;
+    padding: 7px 0 0 7px;
+    width: 91px;
+}
+</style>
 </head>
 <body>
 [% INCLUDE menu.tt %] 
 <h2 id = "gl-head-second" >Explore / Galleries</h2>
 [% CALL albums_rs.reset %]
 <div class="container_12 flick">
-	<div class="grid_8 ";>
+	<div class ="grid_8" style="font-size: 13px;  font-color="#C0C0C0"; font-family: Arial,Helvetica,sans-serif; ">
+	
+	</div>
+	<div class="grid_5 ";>
 		[% WHILE ( album = albums_rs.next ) -%]
 		    [% IF album.pictures %]
+		    <div class = "gallery-case">
 		       <div class="img" style="float: left; margin-right: 20px;" >
-		           <a href="/album/[%album.album_id%]/viewall"> <img src="/gallery/[% album.pictures.first.thumbnail %]"> </img> </a>  
-		           <div ><h4>[% album.album_name %]</h4></div>
+		       [% IF c.user_exists  %]
+		           <a href="/album/[%album.album_id%]/viewall">
+		           		<img src="/gallery/[% album.pictures.first.thumbnail %]" /> 
+		           </a> 
+		         
+		        
+		           <div style="font-size: 13px; font-family: Arial,Helvetica,sans-serif; ">[% album.album_name %]</div>
+		           <div style="font-size: 13px; font-color="#C0C0C0"; font-family: Arial,Helvetica,sans-serif; "> 
+		               by :[%album.user.username%]
+		        [%END%]
+		        [% IF !c.user_exists  %]		   
+		           		<img src="/gallery/[% album.pictures.first.thumbnail %]" /> 
+		           <div style="font-size: 13px; font-family: Arial,Helvetica,sans-serif; ">[% album.album_name %]</div>
+		           <div style="font-size: 13px; font-color="#C0C0C0"; font-family: Arial,Helvetica,sans-serif; "> 
+		               by :[%album.user.username%]
+		        [%END%]
+		        
+		        
+		       	  </div>
 		       </div>
+		    </div>
 		    [% END %]
 		[% END -%]		
 	</div>
-	<div class="grid_2">
-		[% INCLUDE login.tt %] 
-	</div>
+		[% IF !c.user_exists  %]
+		<div class="grid_2">
+			[% INCLUDE login.tt %] 
+		</div>
+		[%END%]
 </div>	
-<hr></hr>
 </body>
 </html>
+[% INCLUDE smenu.tt %] 

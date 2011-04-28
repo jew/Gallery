@@ -63,9 +63,8 @@ __PACKAGE__->add_columns(
 );
 __PACKAGE__->set_primary_key("album_id");
 #set relationships
-__PACKAGE__-> belongs_to( "users","Gallery::Schema::Result::User",
-
-	{ user_id => "users"},);
+__PACKAGE__-> belongs_to( "user","Gallery::Schema::Result::User",
+{ user_id => "user_id"},);
 __PACKAGE__-> has_many( "pictures" => 'Gallery::Schema::Result::Picture',
 {"foreign.album_id"=>"self.album_id"},
 );

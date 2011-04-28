@@ -71,6 +71,8 @@ __PACKAGE__->add_columns(
 );
 __PACKAGE__->set_primary_key("picture_id");
 #set relationships
+__PACKAGE__->has_many("comments" => 'Gallery::Schema::Result::Comment',
+{"foreign.picture_id"=>"self.picture_id"},);
 __PACKAGE__-> belongs_to( "albums","Gallery::Schema::Result::Album",
 	{"foreign.picture_id"=>"self.picture_id"},
 	{ is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },

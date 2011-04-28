@@ -43,13 +43,13 @@ sub base :Chained('/') :PathPart('album') :CaptureArgs(1){
     my $album      = $c->model('DB::Album')->find({album_id=>$album_id});
     $c->stash(albums => [$c->model('DB::Album')->search({user_id=>$login_user})]);
     #Thumbnail
-    my $thumb = $c->model('DB::Picture')->first();
-    next if !$thumb;
-    my $pic = Gallery->path_to('/root/gallery') . '/' . $thumb->thumbnail;
-	$c->log->debug("---------->".$pic); 
-	$c->model('Thumbnail')->thumbmake($pic);
-	$c->log->debug("--------->".$thumb->thumbnail); 
-	$c->stash(thumbnail => $thumb->thumbnail); 
+    #my $thumb = $c->model('DB::Picture')->first();
+    #next if !$thumb;
+    #my $pic = Gallery->path_to('/root/gallery') . '/' . $thumb->thumbnail;
+	#$c->log->debug("---------->".$pic); 
+	#$c->model('Thumbnail')->thumbmake($pic);
+	#$c->log->debug("--------->".$thumb->thumbnail); 
+	#$c->stash(thumbnail => $thumb->thumbnail); 
     $c->stash(album => $album);
 }
 
@@ -85,7 +85,7 @@ sub view :Chained('base') :PathPart('view') :Args(0){
     #get album_id from chain 
 	my @pictures = [$c->model('DB::Picture')->search({album_id=>$album->album_id()})];
 	#$c->log->debug("----------------------------------------------------->".@pictures);
-    $c->stash(template => 'album/show_pics.tt',pictures=>@pictures,album=>$album);  
+    $c->stash(template => 'album/show_pics.tt',pictures=>@pictures,album=>$album,album_id=>$album->album_id());  
 }
 
 =head6 viewall
@@ -106,18 +106,13 @@ sub viewall :Chained('base') :PathPart('viewall') :Args(0){
 
 sub delete :Chained('base') :PathPart('delete') :Args(0){
     my ( $self, $c ) = @_;
-    my $album_id   = $c->stash->{album_id};
-    my $login_user = $c->user->user_id;
-    my $album = $c->model('DB::Album')->search({user_id=>$login_user});
+    #my $album_id   = $c->stash->{album_id};
     if($c->req->method eq 'POST') {
         $c->stash->{album}->delete;
-        $c->stash(albums=>$album);
         $c->response->redirect($c->uri_for('/album'));
     }
     else {
-        $c->stash(title    => 'Delete album');
-        $c->stash(template => 'album/
-    delete.tt');
+        $c->stash(template => 'album/delete.tt');
     }; 
     
 =head 8 showall

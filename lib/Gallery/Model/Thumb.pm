@@ -43,7 +43,7 @@ sub thumbmake  {
   # Create smaller version
   # documented in Imager::Transformations
  # my $thumb = $img->scale(scalefactor=>.3);
-  my $thumb = $img->scale(xpixels=>192, ypixels=>192);
+  my $thumb = $img->scale(xpixels=>96, ypixels=>96);
   
 
   # Autostretch individual channels

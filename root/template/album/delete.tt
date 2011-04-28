@@ -1,31 +1,10 @@
 
-<form action="" method="post">
-    <table>
-        
-        <tr>
-            <td>
-            </td>
-            <td>
-                Confirm to delete album id [% album_id %].
-            </td>
-        </tr>
-        <tr>
-            <td>
-                </br>
-                Album Name :
-            </td>
-            <td>
-                </br>
-                [% albums.album_name %]               
-            </td>
-        </tr>
-        <tr>
-            <td>
-            </td>
-            <td>
-                </br>
-                <input type="submit" value="Delete" />
-            </td>
-        </tr>
-    </table>      
-</form>
+<div class ="ui-state-error ui corner-all" style="padding: 0 4px; margin: 6px auto 0 auto; width: 300px; text-align: center;">
+	<form action="" method="post">
+		<div style="font-size: 13px; font-family: Arial,Helvetica,sans-serif;">
+			Confirm to delete Album [% album_id %].   
+		</div>
+		<div> </div>        
+        <div><input type="submit" value="Delete" /></div>
+	</form>
+</div>
