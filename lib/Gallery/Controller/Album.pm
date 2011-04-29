@@ -18,14 +18,15 @@ Catalyst Controller.
 
 
 =head2 index
-
+from menu : View your album 
+Show user's album
 =cut
 
 sub index :Path :Args(0){
     my ( $self, $c, $album_id ) = @_;
     my $login_user = $c->user->user_id;
     my $albums_rs = $c->model('DB::Album')->search_rs( { user_id => $login_user } );
-    use Data::Dumper;
+    
     while ( my $album = $albums_rs->next() ) {
 		my $picture = $album->pictures()->first(); #First picture for each album
 		next if !$picture;
@@ -33,6 +34,7 @@ sub index :Path :Args(0){
     }
     $c->stash( albums_rs => $albums_rs);
     $c->stash( template  => 'album/list.tt' );
+    $c->stash(title=>'Show Album');
 }
 
 =head3 base
@@ -68,11 +70,13 @@ sub add :Local :Args(0){
 		});	
 			if($r->album_id) {
 				$c->stash(statusmsg => " Successful! to Add album");	
+				$c->stash(title=>'Add New Album');
 			}
      
-			$c->log->debug("Debug link".$r->album_id);
+			$c->log->debug("Debug album_id".$r->album_id);
 	  } 
 		$c->stash(template => 'album/add_album.tt');
+		$c->stash(title=>'Add New Album');
 }
 =head5 view
 view album of user 
@@ -86,6 +90,7 @@ sub view :Chained('base') :PathPart('view') :Args(0){
 	my @pictures = [$c->model('DB::Picture')->search({album_id=>$album->album_id()})];
 	#$c->log->debug("----------------------------------------------------->".@pictures);
     $c->stash(template => 'album/show_pics.tt',pictures=>@pictures,album=>$album,album_id=>$album->album_id());  
+    $c->stash(title=> "View Your Album");
 }
 
 =head6 viewall
@@ -98,6 +103,7 @@ sub viewall :Chained('base') :PathPart('viewall') :Args(0){
 	my @pictures = [$c->model('DB::Picture')->search({album_id=>$album->album_id()})];
 	$c->log->debug("----------------------------------------------------->".@pictures);
     $c->stash(template => 'album/showpics.tt',pictures=>@pictures,album=>$album);  
+    $c->stash(title=>"View/Comment");
 }
 
 =head7 delete
@@ -113,6 +119,7 @@ sub delete :Chained('base') :PathPart('delete') :Args(0){
     }
     else {
         $c->stash(template => 'album/delete.tt');
+        $c->stash(title=> 'Delete Album')
     }; 
     
 =head 8 showall
@@ -130,6 +137,7 @@ sub showall :Local :Args(0){
          $c->model('Thumbnail')->thumbmake( Gallery->path_to('/root/gallery') . '/' . $picture->path );
      }
     $c->stash( albums_rs => $albums_rs);
+    $c->stash(title=>"View Other Album");
     $c->stash( template  => 'album/showall.tt' );      
 }
 =head1 AUTHOR

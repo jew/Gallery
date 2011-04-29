@@ -35,6 +35,7 @@ sub index :Path :Args(0){
     $c->stash(path => $path);
     $c->stash(template => 'comment/list.tt');
     $c->stash(picture_id=>$picture_id);
+    $c->stash(title=>"Show Comment");
 }
 
 =head3 base 
@@ -46,7 +47,7 @@ sub base :Chained('/') :PathPart('comment') :CaptureArgs(1){
 
 }
 
-=head2 new_comment
+=head2 add
 Create  new comment
 =cut
 sub add :Local :Args(0){
@@ -68,7 +69,7 @@ sub add :Local :Args(0){
     }
     else {
         $c->stash(template => 'comment/add_comment.tt');
-        #$c->stash(template => 'comment/showcomment.tt');
+        
         
     };
 }
@@ -109,6 +110,7 @@ sub showcomment :Local :Args(0){
     my $path = $c->model('DB::Picture')->find($picture_id)->path; 
     $c->stash(path => $path);
     $c->stash(template => 'comment/showcomment.tt',picture_id=>$picture_id);
+    $c->stash(title=>"Show Comment");
 }
 
 =head1 AUTHOR

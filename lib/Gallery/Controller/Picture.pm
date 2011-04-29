@@ -39,8 +39,10 @@ Store the ResultSet from Picture in stash so it's available for other methods
 sub base :Chained('/') :PathPart('picture') :CaptureArgs(1){
     my ( $self, $c,$picture_id) = @_;
     $c->stash(picture_id =>  $picture_id);
+    #Store the ResultSet from  delete
     $c->stash(picture => $c->model('DB::Picture')->search({picture_id=>$picture_id}));
-    $c->stash(template => 'picture/show_pics.tt');
+    #$c->stash(template => 'picture/show_pics.tt');
+    #$c->stash(title    => 'Show Picture');
 }
 
 =head3 add
@@ -49,55 +51,25 @@ add picture
 sub add :Local :Args(0) {
     my ( $self, $c ) = @_;   
     # Retrieve the values from the form
-	my $imagepath   = $c->request->params->{imagepath}    || '';
-	my $imagename   = $c->request->params->{imagename}    || '';
-	my $description   = $c->request->params->{description}    || '';
+	my $imagepath   = $c->request->params->{imagepath};
+	my $imagename   = $c->request->params->{imagename};
+	my $description   = $c->request->params->{description};
     my $upload = $c->request->upload('imagepath');
     my $imagegallerypath = $c->config->{'imagefallerypath'};
     my $login_user= $c->user->user_id;
-    #search for albums 
     $c->stash( albums =>[$c->model('DB::Album')->search({user_id=>$login_user})]);
     my $album_id   = $c->request->params->{album_id};
-    #$c->log->debug("ALBUM ID----->". $album_id);
 	#Upload
     if (!$upload) {
     	$c->log->debug('No upload');
 		$c->stash(template => 'picture/upload.tt',result=>'No upload');
+		$c->stash(title    => 'Upload Picture');
     	return 1;
     }
-    #find max of picture_id  $c->response->body('Matched Gallery::Controller::Picture in Picture.');
-	my $links = $c->model('DB::Picture')->search_rs( { user_id => $login_user });
-	my $picture_ids = $links->get_column('picture_id');
-	my $maxpicture_id = $picture_ids->max;
-	#$c->log->debug("MAXPICID ------------------->". $maxpicture_id);
-	my $max;
-	if($maxpicture_id == 0){
-		$max = 1;
-	}
-	else {
-		
-		$max = $maxpicture_id+1;
-	}
-	#debug Max picture_id 
-	#$c->log->debug("MAX PIC ID --->".$max);
-	#$c->log->debug("imagegallerypath------------>".	$imagegallerypath);
-	#$c->log->debug("DEBUG UPLOAD" .$upload);		
-
-    #Use random name in gallery folder / store imagename in DB
    	my $upload_result = $upload->copy_to($imagegallerypath);
 	$c->log->debug("UPLOAD_RESULT---->" .$upload);
   	if ($imagename eq '') { $imagename = $upload->filename;}
-  	my($imagetmpname, $tmpdirectory, $suffix) = fileparse($upload->tempname);
-    #$c->log->debug("Upload Basename-------->".$upload->basename);
-   	#$c->log->debug('*** Upload result: '.$upload_result.' name:'.$imagename.' tmp:'.$imagetmpname.' tempname: '.$upload->tempname);
-	#$c->log->debug("basename==================k> ".$upload->tempname);
-	#$c->log->debug("pictureID---->".$max);
-	#$c->log->debug("path--->" . $imagetmpname);
-	#$c->log->debug("name--->".$imagename);
-	#$c->log->debug("user_id---->".  $login_user);
-	#$c->log->debug("albumid----->". $album_id);
-	#$c->log->debug("-description-->".$description);
-	#If upload success ==> continue
+  	my($imagetmpname) = fileparse($upload->tempname);
    		if ($upload_result==1) {
 			$c->stash(status_msg => "Upload complete!");
 			#Save image to table 'pictures'
@@ -111,28 +83,25 @@ sub add :Local :Args(0) {
 			});
 			#if album's thumbnail = '' ==> insert current image to thumbnail
 				if ($picture->get_column('thumbnail') eq '') {
-				# chang name 19 April
+				# get name 
 					$imagetmpname =~ s/\.[^.]*$//;
-					$c->log->debug("imagetmpname------------------->".$imagetmpname);
-					$c->log->debug("$1------------------------------->" . $1);
-        			my $name= $imagetmpname ;
-        			$c->log->debug("NAME------------------------------->" . $name);
+        			my $name= $imagetmpname ;;
 					my $thumb_name = ($name ."_low.png");
-					$c->log->debug("thumb_name------------------------------->" . $thumb_name);
 					$picture->update( {
 					thumbnail => $thumb_name, 	
 					});
 				}
    		} else {
     		 $c->stash(error_msg => "Upload fail!");
+    		 $c->stash(title    => 'Upload Picture');
     	}   
     $c->stash(template => 'picture/upload.tt');  
+    $c->stash(title    => 'Upload Picture');
 }
 
 =head2 delete
 delete picture
 =cut
-#--------------------------------------------------------------------------------ว๊ากกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกก
 sub delete :Chained('base') :PathPart('delete') :Args(0){ 
     my ( $self, $c) = @_;
      if($c->req->method eq 'POST') {

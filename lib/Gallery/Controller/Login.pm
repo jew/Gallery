@@ -39,14 +39,17 @@ sub index :Path :Args(0) {
             } else {
                 # Set an error message
                 $c->stash(error_msg => "Bad username or password.");
+                $c->stash(title=>'Login');
             }
         } else {
             # Set an error message
             $c->stash(error_msg => "Empty username or password.");
+            $c->stash(title=>'Login');
         }
 
         # If either of above don't work out, send to the login page
         $c->stash(template => 'login.tt');
+        $c->stash(title=>'Login');
     }
 
 =head1 AUTHOR
