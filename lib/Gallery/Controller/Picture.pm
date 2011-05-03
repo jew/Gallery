@@ -31,7 +31,7 @@ sub index :Path :Args(0) {
    
 }
 
-=head3 base
+=head2 base
 get picture_id
 Store the ResultSet from Picture in stash so it's available for other methods
 =cut
@@ -45,58 +45,58 @@ sub base :Chained('/') :PathPart('picture') :CaptureArgs(1){
     #$c->stash(title    => 'Show Picture');
 }
 
-=head3 add
+=head2 add
 add picture 
 =cut
 sub add :Local :Args(0) {
     my ( $self, $c ) = @_;   
     # Retrieve the values from the form
-	my $imagepath   = $c->request->params->{imagepath};
-	my $imagename   = $c->request->params->{imagename};
-	my $description   = $c->request->params->{description};
-    my $upload = $c->request->upload('imagepath');
+	my $imagepath     	 = $c->request->params->{imagepath};
+	my $imagename    	 = $c->request->params->{imagename};
+	my $description   	 = $c->request->params->{description};
+    my $upload 		  	 = $c->request->upload('imagepath');
     my $imagegallerypath = $c->config->{'imagefallerypath'};
-    my $login_user= $c->user->user_id;
-    $c->stash( albums =>[$c->model('DB::Album')->search({user_id=>$login_user})]);
-    my $album_id   = $c->request->params->{album_id};
+    my $login_user		 = $c->user->user_id;
+    $c->stash( albums => [$c->model('DB::Album')->search({user_id=>$login_user})]);
+    my $album_id      = $c->request->params->{album_id};
 	#Upload
-    if (!$upload) {
-    	$c->log->debug('No upload');
-		$c->stash(template => 'picture/upload.tt',result=>'No upload');
-		$c->stash(title    => 'Upload Picture');
+    if ( !$upload ) {
+        $c->log->debug( 'No upload' );
+		$c->stash( template => 'picture/add.tt',result=>'No upload' );
+		$c->stash( title    => 'Upload Picture' );
     	return 1;
     }
-   	my $upload_result = $upload->copy_to($imagegallerypath);
-	$c->log->debug("UPLOAD_RESULT---->" .$upload);
-  	if ($imagename eq '') { $imagename = $upload->filename;}
-  	my($imagetmpname) = fileparse($upload->tempname);
-   		if ($upload_result==1) {
-			$c->stash(status_msg => "Upload complete!");
-			#Save image to table 'pictures'
-			my $picture= $c->model('DB::Picture')->update_or_create({
-						#picture_id =>$max,
-						path => $imagetmpname,
-						name  => $imagename,
-						description => $description,
-						user_id => $login_user,
-						album_id=> $album_id,
-			});
-			#if album's thumbnail = '' ==> insert current image to thumbnail
-				if ($picture->get_column('thumbnail') eq '') {
-				# get name 
-					$imagetmpname =~ s/\.[^.]*$//;
-        			my $name= $imagetmpname ;;
-					my $thumb_name = ($name ."_low.png");
-					$picture->update( {
-					thumbnail => $thumb_name, 	
-					});
-				}
-   		} else {
-    		 $c->stash(error_msg => "Upload fail!");
-    		 $c->stash(title    => 'Upload Picture');
+   	my $upload_result = $upload->copy_to( $imagegallerypath );
+	$c->log->debug("UPLOAD_RESULT---->" .$upload );
+  	if ( $imagename eq '') {
+  	    $imagename = $upload->filename;
+  	}
+  	my( $imagetmpname ) = fileparse( $upload->tempname );
+   	if ( $upload_result==1 ) {
+	    $c->stash(status_msg => "Upload complete!");
+		#Save image to table 'pictures'
+		my $picture= $c->model('DB::Picture')->update_or_create( {
+		    path  => $imagetmpname,
+            name  => $imagename,
+			description => $description,
+			user_id => $login_user,
+			album_id => $album_id,
+		});
+		    #if album's thumbnail = '' ==> insert current image to thumbnail
+			if ( $picture->get_column( 'thumbnail' ) eq '') {
+			    # get name 
+				$imagetmpname =~ s/\.[^.]*$//;
+        		my $name= $imagetmpname ;;
+				my $thumb_name = ( $name ."_low.png" );
+				$picture->update( {thumbnail => $thumb_name, } );
+			}
+   		} 
+   		else {
+    	    $c->stash( error_msg => "Upload fail!" );
+    		$c->stash( title     => 'Upload Picture' );
     	}   
-    $c->stash(template => 'picture/upload.tt');  
-    $c->stash(title    => 'Upload Picture');
+    $c->stash( template => 'picture/add.tt' );  
+    $c->stash( title    => 'Upload Picture' );
 }
 
 =head2 delete
@@ -104,13 +104,13 @@ delete picture
 =cut
 sub delete :Chained('base') :PathPart('delete') :Args(0){ 
     my ( $self, $c) = @_;
-     if($c->req->method eq 'POST') {
+    if( $c->req->method eq 'POST' ) {
         $c->stash->{picture}->delete;
-        $c->response->redirect($c->uri_for('/album'));
+        $c->response->redirect( $c->uri_for( '/album' ) );
     }
     else {
-        $c->stash(title    => 'Delete Picture');
-        $c->stash(template => 'picture/delete.tt');
+        $c->stash( title    => 'Delete Picture' );
+        $c->stash( template => 'picture/delete.tt' );
 }; 
 
 =head1 AUTHOR
@@ -123,7 +123,6 @@ This library is free software. You can redistribute it and/or modify
 it under the same terms as Perl itself.
 
 =cut
-
-__PACKAGE__->meta->make_immutable;
 }
+__PACKAGE__->meta->make_immutable;
 1;

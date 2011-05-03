@@ -22,55 +22,51 @@ From menu: view your album
 show picture and comment of user album and user can delete pic and comment 
 =cut
 
-sub index :Path :Args(0){
-    my ( $self, $c, $picture_id) = @_;
-    my $login_user= $c->user->user_id;
-    $picture_id = $c->request->param('picture_id');
-    #$c->log->debug("picId--->". $picture_id);
+sub index :Path :Args(0) {
+    my ( $self, $c, $picture_id ) = @_;
+    my $login_user = $c->user->user_id;
+    $picture_id    = $c->request->param( 'picture_id' );
     #searching for comments
-    my @comments = [$c->model('DB::Comment')->search({picture_id=>$picture_id}, {order_by => 'c_date DESC'})->all()];
-    $c->stash(comments=>@comments);
+    my $comments   = $c->model( 'DB::Comment' )->search( { picture_id => $picture_id }, { order_by => 'c_date DESC' } );
+    $c->stash( comments => $comments );
     #get path : return row
-    my $path = $c->model('DB::Picture')->find($picture_id)->path; 
-    $c->stash(path => $path);
-    $c->stash(template => 'comment/list.tt');
-    $c->stash(picture_id=>$picture_id);
-    $c->stash(title=>"Show Comment");
+    my $path = $c->model( 'DB::Picture' )->find( $picture_id )->path; 
+    $c->stash( path => $path );
+    $c->stash( template => 'comment/index.tt' );
+    $c->stash( picture_id => $picture_id );
+    $c->stash( title => "Show Comment" );
 }
 
-=head3 base 
+=head2 base 
 get picture_id
 =cut
-sub base :Chained('/') :PathPart('comment') :CaptureArgs(1){
+sub base :Chained('/') :PathPart('comment') :CaptureArgs(1) {
     my ( $self, $c, $picture_id) = @_;
-    $c->stash(picture_id => $picture_id);
-
+    $c->stash( picture_id => $picture_id );
 }
 
 =head2 add
 Create  new comment
 =cut
-sub add :Local :Args(0){
+sub add :Local :Args(0) {
     my ( $self, $c ) = @_;
-    my $picture_id = $c->request->param('picture_id');
+    my $picture_id = $c->request->param( 'picture_id' );
     my $login_user= $c->user->user_id;
     $c->log->debug("->" . $login_user);
     #get path 
-    my $path = $c->model('DB::Picture')->find($picture_id)->path; 
-    $c->log->debug("path------>" . $path);
-    $c->stash(path => $path);
-    if($c->req->method eq 'POST') {        
-        $c->model('DB::Comment')->create({
-						picture_id => $picture_id,
-						comment =>$c->req->param('comment'),
-						user_id =>  $login_user,
-        });
+    my $path = $c->model( 'DB::Picture' )->find( $picture_id )->path; 
+    $c->log->debug( "path------>" . $path );
+    $c->stash( path => $path );
+    if( $c->req->method eq 'POST' ) {
+        $c->model( 'DB::Comment' )->create ( {
+            picture_id => $picture_id,
+            comment => $c->req->param( 'comment' ),
+            user_id =>  $login_user,
+        } );
         $c->response->redirect( ($c->uri_for('/comment/showcomment')).'?picture_id=' .$picture_id );      
     }
     else {
-        $c->stash(template => 'comment/add_comment.tt');
-        
-        
+        $c->stash(template => 'comment/add.tt');   
     };
 }
 
@@ -78,18 +74,18 @@ sub add :Local :Args(0){
 delete comment
 =cut
 
-sub delete :Chained('base') :Args(0){
-    my ( $self, $c) = @_;
- 	my $comment_id = $c->request->param('comment_id'); 
-    if($c->req->method eq 'POST') {
-    	#delete comment	
-		$c->model('DB::Comment')->find($comment_id)->delete;
-		#stash->{picture_id} from chain
-        $c->response->redirect($c->uri_for('/comment', { picture_id => $c->stash->{picture_id} } ));
+sub delete :Chained('base') :Args(0) {
+    my ( $self, $c ) = @_;
+    my $comment_id = $c->request->param( 'comment_id' ); 
+    if( $c->req->method eq 'POST' ) {
+        #delete comment	
+        $c->model( 'DB::Comment' )->find( $comment_id )->delete;
+        #stash->{picture_id} from chain
+        $c->response->redirect( $c->uri_for( '/comment', { picture_id => $c->stash->{ picture_id } } ) );
     }
     else {
-        $c->stash(title    => 'Delete comment');
-        $c->stash(template => 'comment/delete.tt');
+        $c->stash( title    => 'Delete comment' );
+        $c->stash( template => 'comment/delete.tt' );
     }; 
 }
 
@@ -98,19 +94,19 @@ sub delete :Chained('base') :Args(0){
 =head2 
 showcomment after do comment
 =cut
-sub showcomment :Local :Args(0){
-    my ( $self, $c) = @_;
-    my $login_user= $c->user->user_id;
-    my $picture_id = $c->request->param('picture_id'); 
-    $c->log->debug("picId--->". $picture_id);
+sub showcomment :Local :Args(0) {
+    my ( $self, $c ) = @_;
+    my $login_user = $c->user->user_id;
+    my $picture_id = $c->request->param( 'picture_id' ); 
+    $c->log->debug( "picId--->". $picture_id );
     #searching for comments
-    my @comments = [$c->model('DB::Comment')->search({picture_id=>$picture_id})->all()];
-    $c->stash(comments=>@comments);
+    my $comments =  $c->model( 'DB::Comment' )->search( { picture_id => $picture_id } );
+    $c->stash( comments=>$comments );
     #get path : return row
-    my $path = $c->model('DB::Picture')->find($picture_id)->path; 
-    $c->stash(path => $path);
-    $c->stash(template => 'comment/showcomment.tt',picture_id=>$picture_id);
-    $c->stash(title=>"Show Comment");
+    my $path = $c->model( 'DB::Picture' )->find( $picture_id )->path; 
+    $c->stash( path => $path );
+    $c->stash( template => 'comment/showcomment.tt',picture_id => $picture_id );
+    $c->stash( title=> "Show Comment" );
 }
 
 =head1 AUTHOR
