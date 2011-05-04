@@ -6,6 +6,7 @@ package Gallery::Schema::Result::Album;
 use strict;
 use warnings;
 
+use Imager;
 use Moose;
 use MooseX::NonMoose;
 use namespace::autoclean;
@@ -13,11 +14,9 @@ extends 'DBIx::Class::Core';
 
 
 
+
 __PACKAGE__->table("albums");
 	
-
-
-__PACKAGE__->table("albums");
 
 
 __PACKAGE__->load_components("InflateColumn::DateTime");
@@ -84,8 +83,11 @@ __PACKAGE__-> has_many( "pictures" => 'Gallery::Schema::Result::Picture',
 sub get_thumbnail {
     my $self = shift;
     my $picture = $self->pictures()->first(); #First picture for each album
+    #use Data::Dumper;
+    #Dumper("Picture value" . $picture); 
     return if !$picture ;
     my $file = Gallery->config->{'imagefallerypath'} . '/' . $picture->path;
+    #die($file);
     $self->thumbmake($file);
 };
 
@@ -106,9 +108,9 @@ sub thumbmake  {
 
     $file =~ s/\.[^.]*$//;
 
-  # Create smaller version
-  # documented in Imager::Transformations
- # my $thumb = $img->scale(scalefactor=>.3);
+    # Create smaller version
+    # documented in Imager::Transformations
+    # my $thumb = $img->scale(scalefactor=>.3);
     my $thumb = $img->scale( xpixels => 128, ypixels => 128 );
   
 

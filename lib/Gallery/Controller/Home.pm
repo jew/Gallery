@@ -21,18 +21,11 @@ Catalyst Controller.
 show all albums
 =cut
 
-sub index :Path :Args(0) {
-	my ( $self, $c) = @_;
-	my $albums_rs = $c->model('DB::Album');
-	
-    #Search for first pic to make thumbnail
-     while ( my $album = $albums_rs->next() ) {
-         my $picture = $album->pictures()->first(); #First picture for each album
-         next if !$picture;
-         $c->model('Thumb')->thumbmake( Gallery->path_to('/root/gallery') . '/' . $picture->path );
-     }
-    $c->stash( albums_rs => $albums_rs);
-    $c->stash( template  => 'home.tt' );
+sub home :Path :Args(0) {
+    my ( $self, $c ) = @_;
+    my $albums_rs = $c->model( 'DB::Album' );
+    $c->stash( albums_rs => $albums_rs );
+
 }
 
 
