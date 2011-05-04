@@ -25,7 +25,7 @@ sub home :Path :Args(0) {
     my ( $self, $c ) = @_;
     my $albums_rs = $c->model( 'DB::Album' );
     $c->stash( albums_rs => $albums_rs );
-
+    $c->stash( template  => 'home.tt' );
 }
 
 
