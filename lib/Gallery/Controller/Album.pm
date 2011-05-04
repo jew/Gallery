@@ -104,9 +104,10 @@ sub delete :Chained( 'base' ) :PathPart( 'delete' ) :Args(0) {
     else {
         $c->stash( title => 'Delete Album' )
     }; 
-}   
+}
+
 =head2 showall
-From menu : view other album
+from menu : view other album
 shows album of other user
 =cut
 sub showall :Local :Args(0) {

@@ -34,6 +34,14 @@ __PACKAGE__->table("comments");
   data_type: 'varchar'
   is_nullable: 1
 
+=head2 picture_id
+  data_type: 'integer'
+  is_nullable: 1
+
+=head2 user_id
+  data_type: 'integer'
+  is_nullable: 1
+
 =head2 c_date
 
   data_type: 'datetime'

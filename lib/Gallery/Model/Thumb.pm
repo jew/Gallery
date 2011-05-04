@@ -23,7 +23,7 @@ it under the same terms as Perl itself.
 
 =cut
 
-=head2
+=head2 thumbmake 
   Create thumb by passing filename --> thumbnailmake($filename)
   Return thumnail filename
 =cut
@@ -50,9 +50,8 @@ sub thumbmake  {
   $thumb->filter(type=>'autolevels');
 
   # try to save in one of these formats
-  SAVE:
-
-  for $format ( qw( png gif jpeg tiff ppm ) ) {
+  SAVE: 
+    for my $format_ ( qw( png gif jpeg tiff ppm ) ) {
     # Check if given format is supported
     if ($Imager::formats{$format}) {
       $file.="_low.$format";

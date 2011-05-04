@@ -22,7 +22,7 @@ Gallery::Controller::Root - Root Controller for Gallery
 
 =head2 index
 
-The root page (/)
+The root page (/home)
 
 =cut
 
@@ -45,12 +45,8 @@ sub default :Path {
     $c->response->status(404);
 }
 
-
-#---------------------------------
 =head2 auto
-
     Check if there is a user and, if not, forward to login page
-
 =cut
 
     # Note that 'auto' runs after 'begin' but before your actions and that

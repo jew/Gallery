@@ -42,7 +42,27 @@ __PACKAGE__->table("pictures");
 
   data_type: 'integer'
   is_nullable: 0
+  
+=head2 path
 
+  data_type: 'varchar'
+  is_nullable: 0
+
+=head2 name
+
+  data_type: 'varchar'
+  is_nullable: 0
+
+=head2 thumbnail
+
+  data_type: 'varchar'
+  is_nullable: 0
+
+=head2 LastUpdated
+
+  data_type: 'datetime'
+  default_value: CURRENT_DATE
+  is_nullable: 0
 =cut
 
 __PACKAGE__->add_columns(

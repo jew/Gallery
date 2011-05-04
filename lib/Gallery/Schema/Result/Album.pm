@@ -26,8 +26,7 @@ __PACKAGE__->load_components("InflateColumn::DateTime");
 Gallery::Schema::Result::Album
 
 =cut
-=head2 thumbnail
-=cut
+
 
 =head1 ACCESSORS
 
@@ -80,6 +79,10 @@ __PACKAGE__-> has_many( "pictures" => 'Gallery::Schema::Result::Picture',
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:gCf6kkiNryGAXIO9g17cFg
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
+
+=head2 get_thumbnail
+get file and send to thumbmake
+=cut
 sub get_thumbnail {
     my $self = shift;
     my $picture = $self->pictures()->first(); #First picture for each album
@@ -90,13 +93,17 @@ sub get_thumbnail {
     #die($file);
     $self->thumbmake($file);
 };
-
+=head2 thumbnail
+get first picture from the Pictures table 
+=cut
 sub	thumbnail {
     my $self = shift;
     $self->get_thumbnail();
     $self->pictures->first()->thumbnail;
 }
+=head2 thumbmake 
 
+=cut
 sub thumbmake  {
     my ( $self, $file ) = @_;
     my $format;
@@ -119,8 +126,8 @@ sub thumbmake  {
 
   # try to save in one of these formats
   SAVE:
-
-    for $format ( qw( png gif jpeg tiff ppm ) ) {
+  
+    for my $format_ ( qw( png gif jpeg tiff ppm ) ) {
     # Check if given format is supported
         if ($Imager::formats{$format}) {
             $file.="_low.$format";
@@ -128,7 +135,7 @@ sub thumbmake  {
             # documented in Imager::Files
             $thumb->write( file => $file ) or
             die $thumb->errstr;
-            last SAVE;
+            last SAVE ;
     }
   }
  
