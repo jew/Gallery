@@ -36,7 +36,7 @@ get picture_id
 Store the ResultSet from Picture in stash so it's available for other methods
 =cut
 
-sub base :Chained('/') :PathPart('picture') :CaptureArgs(1) {
+sub base :Chained('/') :PathPart( 'picture' ) :CaptureArgs(1) {
     my ( $self, $c,$picture_id ) = @_;
     $c->stash( picture_id =>  $picture_id );
     $c->stash( picture => $c->model( 'DB::Picture' )->search( { picture_id => $picture_id } ) );
@@ -55,7 +55,7 @@ sub add :Local :Args(0) {
     my $upload 		  	 = $c->request->upload('imagepath');
     my $imagegallerypath = $c->config->{'imagefallerypath'};
     my $login_user		 = $c->user->user_id;
-    my $albums = $c->model('DB::Album')->search({user_id=>$login_user}) ; 
+    my $albums = $c->model( 'DB::Album' )->search( { user_id => $login_user } ) ; 
     $c->stash( albums => $albums );
     my $album_id      = $c->request->params->{album_id};
 	#Upload
@@ -71,7 +71,7 @@ sub add :Local :Args(0) {
   	    $imagename = $upload->filename;
   	}
   	my( $imagetmpname ) = fileparse( $upload->tempname );
-   	if ( $upload_result==1 ) {
+   	if ( $upload_result == 1 ) {
 	    $c->stash( status_msg => "Upload complete!" );
 		#Save image to table 'pictures'
 		my $picture = $c->model( 'DB::Picture' )->update_or_create( {
@@ -100,8 +100,8 @@ sub add :Local :Args(0) {
 =head2 delete
 delete picture
 =cut
-sub delete :Chained('base') :PathPart('delete') :Args(0) { 
-    my ( $self, $c) = @_;
+sub delete :Chained( 'base' ) :PathPart( 'delete' ) :Args(0) { 
+    my ( $self, $c ) = @_;
     if( $c->req->method eq 'POST' ) {
         $c->stash->{picture}->delete;
         $c->response->redirect( $c->uri_for( '/album' ) );

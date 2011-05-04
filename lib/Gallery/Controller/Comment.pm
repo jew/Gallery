@@ -39,8 +39,8 @@ sub index :Path :Args(0) {
 =head2 base 
 get picture_id
 =cut
-sub base :Chained('/') :PathPart('comment') :CaptureArgs(1) {
-    my ( $self, $c, $picture_id) = @_;
+sub base :Chained('/') :PathPart( 'comment' ) :CaptureArgs(1) {
+    my ( $self, $c, $picture_id ) = @_;
     $c->stash( picture_id => $picture_id );
 }
 
@@ -61,7 +61,7 @@ sub add :Local :Args(0) {
             comment => $c->req->param( 'comment' ),
             user_id => $login_user,
         } );
-        $c->response->redirect( ($c->uri_for( '/comment/showcomment' ) ).'?picture_id=' .$picture_id );      
+        $c->response->redirect( ( $c->uri_for( '/comment/showcomment' ) ).'?picture_id=' .$picture_id );      
     }
     else {
         $c->stash( template => 'comment/add.tt' );   
@@ -72,7 +72,7 @@ sub add :Local :Args(0) {
 delete comment
 =cut
 
-sub delete :Chained('base') :Args(0) {
+sub delete :Chained( 'base' ) :Args(0) {
     my ( $self, $c ) = @_;
     my $comment_id = $c->request->param( 'comment_id' ); 
     if( $c->req->method eq 'POST' ) {

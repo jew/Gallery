@@ -32,7 +32,7 @@ sub index :Path :Args(0) {
 
 =head2 base
 =cut
-sub base :Chained('/') :PathPart( 'album' ) :CaptureArgs(1) {
+sub base :Chained( '/' ) :PathPart( 'album' ) :CaptureArgs(1) {
     my ( $self, $c, $album_id ) = @_;
     my $login_user = $c->user->user_id;
     $c->stash( album => $c->model( 'DB::Album' )->find( $album_id ) );
@@ -64,7 +64,7 @@ view album of user
 menu : View your album->click on album then show pic
 =cut
 
-sub view :Chained('base') :PathPart('view') :Args(0) {
+sub view :Chained( 'base' ) :PathPart( 'view' ) :Args(0) {
     my ( $self, $c ) = @_;
     my $album = $c->stash->{album};
     #get album_id from chain 
@@ -80,7 +80,7 @@ sub view :Chained('base') :PathPart('view') :Args(0) {
 view other album and can comment 
 view pictures 
 =cut
-sub viewall :Chained('base') :PathPart('viewall') :Args(0) {
+sub viewall :Chained( 'base' ) :PathPart( 'viewall' ) :Args(0) {
     my ( $self, $c ) = @_;
     my $album = $c->stash->{album};
     my $pictures_rs = $c->model( 'DB::Picture' )->search( { album_id => $album->album_id() } );
@@ -94,7 +94,7 @@ sub viewall :Chained('base') :PathPart('viewall') :Args(0) {
 
 =cut
 
-sub delete :Chained('base') :PathPart('delete') :Args(0) {
+sub delete :Chained( 'base' ) :PathPart( 'delete' ) :Args(0) {
     my ( $self, $c ) = @_;
     #my $album_id   = $c->stash->{album_id};
     if( $c->req->method eq 'POST' ) {
