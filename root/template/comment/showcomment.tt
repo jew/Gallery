@@ -1,5 +1,5 @@
 [% INCLUDE menu.tt %]
-[% USE date %]  	
+[% USE date %]  
 <div id="body" class="flick" >
 <div style="margin-top:50px;">	
 	<div align="center" >
@@ -7,21 +7,22 @@
 	</div>	
 	<div align="center">
 		<div  style="width: 500px;">
-			[% FOREACH comment IN comments -%]
+			[%- WHILE (comment=comments.next)-%]
 				<div class ="ui-state-highlight ui corner-all"  style ="margin-top: 50px; text-align: center;">
 					<p style="font-size: 13px; font-family: Arial,Helvetica,sans-serif;">
 						[%- comment.comment -%]
 					</p>     
 					<p style="font-size: 13px; font-family: Arial,Helvetica,sans-serif;">
 						[%
-					
-							date.format(
-		                	time   = comment.c_date.iso,
-		                	format = '%d-%B-%y',
+					    
+                          	date.format(
+                          	format = '%d-%B-%y',
+		                	time   = "0:0:0 $comment.c_date.dmy",
 		            		)
 		            	%] 
-            		
+		            	
             	  		BY: [%comment.user.first_name%]         
+            	  		
 					</p>
 				</div>	
 			[% END -%]

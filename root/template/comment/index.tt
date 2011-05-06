@@ -14,12 +14,12 @@
 				</p>     
 				<p style="font-size: 13px; font-family: Arial,Helvetica,sans-serif;">
 					[%
-					
-					    date.format(
-                		date   = comment.c_date.iso,
-                		format = '%A-%B-%y',
-            			)
-            		%] 
+                        
+                            date.format(
+                            format = '%d-%B-%y',
+                            time   = "0:0:0 $comment.c_date.dmy",
+                            )
+                     %] 
             		
             	  BY: [%comment.user.username%]     
 				 	<a href="/comment/[%comment.picture_id%]/delete?comment_id=[%comment.comment_id%]">

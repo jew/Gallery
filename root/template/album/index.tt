@@ -38,7 +38,8 @@ p.margin {
 [% INCLUDE menu.tt %]
     [% CALL albums_rs.reset %]
     <p class="margin">ALL ALBUMS :</p>
-    [% WHILE ( album = albums_rs.next ) -%] [% IF album.pictures %]
+    [% WHILE ( album = albums_rs.next ) -%]
+         [% IF album.pictures %]
     <div class="img">
         <!--<a href="/album/[%album.album_id%]/view"> <img
         src="/gallery/[% album.pictures.first.thumbnail %]"> </img> </a>-->

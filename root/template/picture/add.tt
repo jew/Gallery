@@ -16,7 +16,8 @@
   		<div>
 			<form method="post" name='upload' action="" ENCTYPE="multipart/form-data" id="upload_image_form" onsubmit="return validateForm()">
 				<select  name="album_id">
-					[% FOREACH album IN albums -%]
+				[% CALL albums.reset %]
+				    [%WHILE ( album = albums.next )%]
 				  		<option value ="[% album.album_id %]" >[% album.album_name %]</option>
 					[% END %]
 				</select>

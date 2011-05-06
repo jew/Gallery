@@ -51,7 +51,7 @@ sub thumbmake  {
 
   # try to save in one of these formats
   SAVE: 
-    for my $format_ ( qw( png gif jpeg tiff ppm ) ) {
+    for my $format ( qw( png gif jpeg tiff ppm ) ) {
     # Check if given format is supported
     if ($Imager::formats{$format}) {
       $file.="_low.$format";
